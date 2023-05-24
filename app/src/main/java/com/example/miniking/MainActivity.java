@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +22,13 @@ public class MainActivity extends AppCompatActivity {
         // status bar is hidden, so hide that too if necessary.
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+
+        TextView display = (TextView) findViewById(R.id.dialogTextView);
+        //Printer.printyBox("Voila", display);
+        DrawTitle.go(display);
     }
+
 
 
 }

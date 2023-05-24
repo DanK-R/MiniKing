@@ -22,9 +22,11 @@
         <TextView
             android:id="@+id/dialogTextView"
             android:layout_width="match_parent"
-            android:layout_height="592dp"
-            android:background="@color/textBG"
-            android:text="@string/DialogBox" />
+            android:layout_height="492dp"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:text="@string/DialogBox"
+            />
 
         <Space
             android:layout_width="match_parent"
@@ -35,24 +37,38 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/yesButton"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_star" />
+                tools:srcCompat="@tools:sample/avatars" />
 
-            <Space
-                android:layout_width="8dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0" />
-
-            <ImageButton
-                android:id="@+id/noButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:srcCompat="@android:drawable/btn_dialog" />
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/yesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/btn_star" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8px"
+                    android:layout_weight="0" />
+
+                <ImageButton
+                    android:id="@+id/noButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/btn_dialog" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
