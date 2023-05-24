@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MiniKing</string>
-    <string name="DialogBox">Placeholder</string>
+    <string name="DialogBox">#####################################################</string>
 </resources>

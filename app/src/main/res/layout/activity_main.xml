@@ -24,9 +24,13 @@
             android:layout_width="match_parent"
             android:layout_height="492dp"
             android:background="@color/black"
-            android:textColor="@color/white"
+            android:fontFamily="monospace"
+            android:paddingLeft="6dp"
             android:text="@string/DialogBox"
-            />
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:typeface="normal" />
 
         <Space
             android:layout_width="match_parent"
