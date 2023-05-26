@@ -27,7 +27,7 @@ class EnterAsker {
         boolean running = true;
         while (running) {
             if(clear) {
-                DrawScene.clear();
+                //DrawScene.clear();
             }
             if(text != null) {
                 DrawScene.open();

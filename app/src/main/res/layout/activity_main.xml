@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/dialogTextView"
             android:layout_width="match_parent"
-            android:layout_height="492dp"
+            android:layout_height="520dp"
             android:background="@color/black"
             android:fontFamily="monospace"
             android:paddingLeft="6dp"

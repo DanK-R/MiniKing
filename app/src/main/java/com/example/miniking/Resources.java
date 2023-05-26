@@ -1,5 +1,9 @@
 package com.example.miniking;
 
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.*;
 import java.io.*;
 
@@ -12,6 +16,7 @@ class Resources {
     private int seed;
     private Random rand;
     private String rName;
+    private TextView display;
 
     //used on new game
     public Resources() {
@@ -60,13 +65,62 @@ class Resources {
         this.rName = (NameGen.rivalName(rand));
     }
 
+    public Resources(TextView display) {
+        this.time = 1;
+        this.order = 15;
+        this.food = 15;
+        this.gold = 15;
+        this.might = 15;
+        this.display = display;
+
+        //create unique random seed - 9 ints each 1-8, 134,217,728 possible outcomes
+        //100 tries at a new seed else it terminates
+        Random r = new Random();
+        boolean running = true;
+        for(int j = 0; running; j++) {
+            StringBuffer sb = new StringBuffer();
+
+            for(int i = 0; i < 9; i++) {
+                sb.append(r.nextInt(7) + 1);
+            }
+
+            File file = new File("Temp/" + sb.toString() + ".txt");
+            if (!file.exists()) {
+                this.seed = Integer.parseInt(sb.toString());
+                running = false;
+            }
+            if(j == 100) {
+                System.out.println("Unique Seed Generation Failure");
+                System.exit(0);
+            }
+        }
+
+        //seeded random rival name
+        this.rand = new Random(seed);
+        this.rName = (NameGen.rivalName(rand));
+    }
+
+    public Resources(int time, int order, int food, int gold, int might, int seed, TextView display) {
+        this.time = time;
+        this.order = order;
+        this.food = food;
+        this.gold = gold;
+        this.might = might;
+        this.seed = seed;
+        this.rand = new Random(seed);
+        this.rName = (NameGen.rivalName(rand));
+        this.display = display;
+    }
+
     //display the resource values
     public void draw() {
-        Printer.printyBox("Years In Power: " + this.time);     
-        Printer.printyBox("Order: " + meter(this.order));
-        Printer.printyBoxShort("Food:  " + meter(this.food));
-        Printer.printyBoxShort("Gold:  " + meter(this.gold));
-        Printer.printyBoxShort("Might: " + meter(this.might));
+        Printer.printyBox("", display);
+        Printer.printyBox("Years In Power: " + this.time, display);
+        Printer.printyBox("Order: " + meter(order), display);
+        Printer.printyBox("Food:  " + meter(food), display);
+        Printer.printyBox("Gold:  " + meter(gold), display);
+        Printer.printyBox("Might: " + meter(might), display);
+        Printer.printyBox("", display);
         
     }
 
@@ -76,10 +130,10 @@ class Resources {
 
         for(int i = 0; i < 30; i++) {
             if(i < value) {
-                sb.append("■");
+                sb.append("#");
             }
             else {
-                sb.append("□");
+                sb.append("-");
             }
         }
         return sb.toString();

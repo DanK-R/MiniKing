@@ -81,14 +81,15 @@ class Printer {
     public static void printyBox(String output, TextView display) {
         String[] outStrings = output.split(" ");
         StringBuffer sb = new StringBuffer();
+        int width = 53;
 
         sb.append("#  ");
         for(int i = 0; i < outStrings.length;) {
-            if(sb.length() + outStrings[i].length() >= 64) {
+            if(sb.length() + outStrings[i].length() >= width - 3) {
                 int start = sb.length();
-                for(int k = 0; k < 67 - start; k++) {
+                for(int k = 0; k < width - start; k++) {
                     sb.append(" ");
-                    if(sb.length() == 66) {
+                    if(sb.length() == width - 1) {
                         sb.append("#");
                         k++;
                     }
@@ -105,9 +106,9 @@ class Printer {
 
                 if(i == outStrings.length - 1) {
                     int start = sb.length();
-                    for(int k = 0; k < 67 - start; k++) {
+                    for(int k = 0; k < width - start; k++) {
                         sb.append(" ");
-                        if(sb.length() == 66) {
+                        if(sb.length() == width - 1) {
                             sb.append("#");
                             k++;
                         }

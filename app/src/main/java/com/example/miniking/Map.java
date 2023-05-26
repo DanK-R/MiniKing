@@ -51,7 +51,7 @@ class Map {
     //765
     
     public static void mapView(Resources res) {
-        DrawScene.clear();
+        //DrawScene.clear();
         
         String[] mapT = map;
         int rivalDat = res.getSeedIndex(0);

@@ -1,4 +1,6 @@
 package com.example.miniking;//Displays the passed string, then returns true if input is affermative
+import android.widget.TextView;
+
 import java.util.*;
 import java.util.regex.*;
 
@@ -8,11 +10,13 @@ class ContinueAsker {
     private boolean answer;
     private Resources res;
     private boolean clear;
+    private TextView display;
 
-    public ContinueAsker(String q, boolean clear) {
+    public ContinueAsker(String q, boolean clear, TextView display) {
         this.scn = new Scanner(System.in);
         this.question = q;
         this.clear = clear;
+        this.display = display;
     }
 
     public boolean run(int[] x) {
@@ -20,7 +24,7 @@ class ContinueAsker {
         boolean running = true;
         while (running) {
             if(clear) {
-                DrawScene.clear();
+                display.setText("");
             }
             DrawScene.open();
             if(res != null) {

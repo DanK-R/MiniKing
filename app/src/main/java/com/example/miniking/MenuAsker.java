@@ -1,8 +1,12 @@
 package com.example.miniking;//Main menu of the game
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.*;
 
 class MenuAsker {
-    private Scanner scn;
+    private TextView display;
     private String question;
     private boolean answer;
     private Resources res;
@@ -11,11 +15,20 @@ class MenuAsker {
     private static String menuText2 = "What is on the agenda your Highness?";
 
     public MenuAsker(String q, Questions qList, Resources res, boolean clear) {
-        this.scn = new Scanner(System.in);
+        //this.scn = new Scanner(System.in);
         this.question = q;
         this.res = res;
         this.clear = clear;
         this.qList = qList;
+        run();
+    }
+    public MenuAsker(String q, Questions qList, Resources res, boolean clear, TextView display) {
+        //this.scn = new Scanner(System.in);
+        this.question = q;
+        this.res = res;
+        this.clear = clear;
+        this.qList = qList;
+        this.display = display;
         run();
     }
 
@@ -23,7 +36,7 @@ class MenuAsker {
         boolean running = true;
         while (running) {
             if(clear) {
-                DrawScene.clear();
+                display.setText("");
             }
             //checks if player is in lose state
             if(Fail.check(res)) {
@@ -31,6 +44,7 @@ class MenuAsker {
             }
             visuals();
 
+            /*
             //process user input
             String reply = scn.nextLine();
             reply = reply.toLowerCase();
@@ -72,36 +86,42 @@ class MenuAsker {
                     menu.run();
                     break;
             }
+
+             */
+            running = false;
         }
     }
 
     //Draw the menu on screen
     private void visuals() {
-        DrawScene.open();
+        DrawScene.open(display);
         if(res != null) {
             res.draw();
-            DrawScene.close();
+            DrawScene.close(display);
         }
         
-        DrawScene.open();
-        Printer.printyBox(question);
-        DrawScene.close();
+        DrawScene.open(display);
+        Printer.printyBox(question, display);
+        DrawScene.close(display);
         
-        DrawScene.open();
-        Printer.printyBox("");
-        Printer.printyBox("Options:");
-        Printer.printyBox("");
-        Printer.printyBox("          Duty:");
-        Printer.printyBox("                 Pass your judgement as Monarch.");
-        Printer.printyBox("          Map:");
-        Printer.printyBox("                 See the surrounding area.");
-        Printer.printyBox("          Help:");
-        Printer.printyBox("                 Explination of mechanics.");
-        Printer.printyBox("          End:");
-        Printer.printyBox("                 Exit game.");
-        Printer.printyBox("");
-        DrawScene.close();
+        DrawScene.open(display);
+        Printer.printyBox("", display);
+        Printer.printyBox("Options:", display);
+        Printer.printyBox("", display);
+        Printer.printyBox("     Duty:", display);
+        Printer.printyBox("            Pass your judgement as Monarch.", display);
+        Printer.printyBox("     Map:", display);
+        Printer.printyBox("            See the surrounding area.", display);
+        Printer.printyBox("     Help:", display);
+        Printer.printyBox("            Explination of mechanics.", display);
+        Printer.printyBox("     End:",display);
+        /*
+        Printer.printyBox("            Exit game.",display);
+        Printer.printyBox("", display);
 
-        System.out.print("#  " + "Your Reply: ");
+         */
+        DrawScene.close(display);
+
+        Printer.printyBox("#  " + "Your Reply: ", display);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.miniking;
 
+import android.widget.TextView;
+
 class Main {
     private static String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
     private static String lossText = "Ahhh Jeeez you lost? Big RIPs dude, wanna try again? ";
@@ -14,6 +16,7 @@ class Main {
             
             begin = new Asker("Continue Previous Game?", false);
             if (begin.run()) {
+                /*
                 ContinueAsker cont = new ContinueAsker("Enter Password, or cancel.", false);
                 if(cont.run(x)) {
                     int[] saveData = Load.load(x);                    
@@ -23,13 +26,15 @@ class Main {
                 else {
                     main(args);
                 }
+
+                 */
             }
             
             Help h = new Help();
             boolean gameRunning = true;
             while(gameRunning) {   
                 if(Fail.check(res)) {
-                    DrawScene.clear();
+                    //DrawScene.clear();
                     DrawScene.open();
                     res.draw();
                     DrawScene.close();
