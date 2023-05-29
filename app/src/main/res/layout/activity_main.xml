@@ -12,7 +12,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/background_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleX="2.5"
@@ -32,6 +32,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_edges_light"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/help_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_marginLeft="5dp"
+                    app:srcCompat="@android:drawable/ic_dialog_info" />
+
+                <ImageButton
+                    android:id="@+id/settings_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="2.5dp"
+                    app:srcCompat="@android:drawable/ic_menu_manage" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
         <TextView
             android:id="@+id/dialogTextView"
@@ -65,8 +109,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="center"
-                android:scaleX="6"
-                android:scaleY="6"
+                android:scaleX="4.5"
+                android:scaleY="4.5"
                 android:src="@drawable/elder_1"
                 android:translationY="-15dp" />
 
