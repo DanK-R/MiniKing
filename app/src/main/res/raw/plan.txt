@@ -1,0 +1,16 @@
+the main list will serve as the main questions for the game
+
+The other lists will be introduced into the stack of questions, should the player take the appropriate first action to kick them off.
+
+Each of the auxillary lists are themed and serve to introduce possible different vibes each playthrough of the game might take.
+
+The question format is: 
+
+{question, outcome1, outcome2, res1, res2}
+
+with the list format being: 
+
+Situation@Outcome if yes@Outcome if no@result1.1#result1.2@result2.1#result2.2
+
+    @s denote separate Strings
+    #s denote separate sub-Strings

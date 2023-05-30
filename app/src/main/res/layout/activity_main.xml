@@ -52,7 +52,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/help_button"
+                    android:id="@+id/helpButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -61,7 +61,7 @@
                     app:srcCompat="@android:drawable/ic_dialog_info" />
 
                 <ImageButton
-                    android:id="@+id/settings_button"
+                    android:id="@+id/settingsButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -80,12 +80,12 @@
         <TextView
             android:id="@+id/dialogTextView"
             android:layout_width="match_parent"
-            android:layout_height="520dp"
+            android:layout_height="500dp"
             android:background="@drawable/rounded_edges_dark"
             android:fontFamily="monospace"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:paddingTop="2dp"
+            android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="@string/DialogBox"
             android:textAlignment="viewStart"
@@ -125,24 +125,26 @@
                     android:id="@+id/yesButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@android:drawable/btn_star" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_weight="0" />
+                    android:background="@drawable/yes_button_unpressed" />
 
                 <ImageButton
                     android:id="@+id/noButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    app:srcCompat="@android:drawable/btn_dialog" />
+                    android:background="@drawable/no_button_unpressed"
+                    android:scaleType="center"
+                    android:scaleX="1"
+                    android:scaleY="1"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

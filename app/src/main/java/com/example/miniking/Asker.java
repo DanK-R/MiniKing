@@ -71,12 +71,40 @@ class Asker{
             @Override
             public void onClick(View v) {
                 answer = 1;
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        yesButton.setBackgroundResource(R.drawable.yes_button_pressed);
+                        try {
+                            Thread.sleep(400);
+                            yesButton.setBackgroundResource(R.drawable.yes_button_unpressed);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
             }
         });
         noButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 answer = 2;
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        noButton.setBackgroundResource(R.drawable.no_button_pressed);
+                        try {
+                            Thread.sleep(400);
+                            noButton.setBackgroundResource(R.drawable.no_button_unpressed);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
             }
         });
 

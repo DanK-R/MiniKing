@@ -122,6 +122,6 @@ class MenuAsker {
          */
         DrawScene.close(display);
 
-        Printer.printyBox("#  " + "Your Reply: ", display);
+        Printer.printyBox("Your Reply: ", display);
     }
 }

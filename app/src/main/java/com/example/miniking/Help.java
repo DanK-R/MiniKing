@@ -32,8 +32,9 @@ class Help {
         
         DrawScene.open(display);
         if(res == null) {
-            Printer.printyBox("Hello and welcome to the game!");
+            Printer.printyBox("Hello and welcome to the game!", display);
         }
+        Printer.printyBox("", display);
         Printer.printyBox(
             "The premise is simple, your job as Monarch is to balance the resources of your Kingdom. If any of the resources (Order, Food, Gold, Might) drop to empty, or fill up all the way, you lose. This represents the Kingdoms balance."
         , display);

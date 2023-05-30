@@ -24,7 +24,7 @@ class Questions {
 
         //parse the data from MainList into questions and shuffle
         try {
-            File file = new File("Tomes/MainList.txt");
+            File file = new File(String.valueOf(R.raw.main_list));
             Scanner scnr = new Scanner(file);
             while(scnr.hasNextLine()) {
                 String data = scnr.nextLine();
@@ -52,7 +52,7 @@ class Questions {
 
         //parse the data from MainList into questions
         try {
-            File file = new File("Tomes/MainList.txt");
+            File file = new File(String.valueOf(R.raw.main_list));
             Scanner scnr = new Scanner(file);
             int i = 0;
             while (scnr.hasNextLine()) {
@@ -292,7 +292,7 @@ class Questions {
         //add the religion questions to templist if religionFlag is raised
         if(religionFlag) {
             try {
-                File file = new File("Tomes/ReligionList.txt");
+                File file = new File(String.valueOf(R.raw.religion_list));
                 Scanner scnr = new Scanner(file);
                 while (scnr.hasNextLine()) {
                     String data = scnr.nextLine();

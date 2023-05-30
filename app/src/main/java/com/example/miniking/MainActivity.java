@@ -30,6 +30,22 @@ public class MainActivity extends AppCompatActivity{
 
         ImageButton yesButton = findViewById(R.id.yesButton);
         ImageButton noButton = findViewById(R.id.noButton);
+        ImageButton helpButton = findViewById(R.id.helpButton);
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open the help view again
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open settings page
+            }
+        });
 
 
         TextView display = (TextView) findViewById(R.id.dialogTextView);
