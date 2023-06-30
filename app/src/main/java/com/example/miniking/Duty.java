@@ -1,7 +1,7 @@
 package com.example.miniking;
 
 class Duty {
-    public static void goQuestion(Resources res, Questions q) {
+    public static void goQuestion(ResourceKeeper res, Questions q) {
             
         Asker asker = new Asker(q.getNext(), res, true);
         if(asker.run()) {

@@ -157,16 +157,27 @@
             android:background="@drawable/rounded_edges_light"
             android:orientation="horizontal">
 
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/portrait"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="center"
+                android:scaleX="4.5"
+                android:scaleY="4.5"
+                android:src="@drawable/elder_1"
+                android:translationY="-15dp" />
+
 
             <LinearLayout
-                android:id="@+id/leftButtonsLayout"
+                android:id="@+id/buttonsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/newGameButton"
+                    android:id="@+id/yesButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -179,43 +190,7 @@
                     android:src="@drawable/yes_button_unpressed_5by3" />
 
                 <ImageButton
-                    android:id="@+id/linkButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    android:scaleX="1"
-                    android:scaleY="1"
-                    android:src="@drawable/no_button_unpressed_5by3" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rightButtonsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/continueButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2.5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:scaleType="fitCenter"
-                    android:background="#00FFFFFF"
-                    android:src="@drawable/yes_button_unpressed_5by3" />
-
-                <ImageButton
-                    android:id="@+id/exitButton"
+                    android:id="@+id/noButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"

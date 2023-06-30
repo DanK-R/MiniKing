@@ -8,7 +8,7 @@ class ContinueAsker {
     private Scanner scn;
     private String question;
     private boolean answer;
-    private Resources res;
+    private ResourceKeeper res;
     private boolean clear;
     private TextView display;
 

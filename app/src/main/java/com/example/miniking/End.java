@@ -3,7 +3,7 @@ import java.io.*;
 
 class End {
 
-    public static void save(Resources res, Questions q) {
+    public static void save(ResourceKeeper res, Questions q) {
         DrawScene.open();
         System.out.println(Printer.Middle("Until Next Time Your Highness", 65));
         

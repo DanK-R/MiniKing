@@ -1,72 +1,65 @@
 package com.example.miniking;//Object that handles the list of situations.
 
+import android.content.Context;
+
 import java.util.*;
 import java.io.*;
 
 class Questions {
     private int index;
     private ArrayList<String[]> qList;
-    private Resources res;
+    private ResourceKeeper res;
     private Random rand;
     private boolean religionFlag;
     private boolean plagueFlag;
     private boolean magicFlag;
+    private Context context;
 
     //used on new game
-    public Questions(Resources res) {
+    public Questions(ResourceKeeper res, Context context) {
         this.index = 0;
         this.qList = new ArrayList<String[]>();
         this.res = res;
         this.religionFlag = false;
         this.plagueFlag = false;
         this.magicFlag = false;
+        this.context = context;
         this.rand = new Random(res.getSeed());
 
         //parse the data from MainList into questions and shuffle
-        try {
-            File file = new File(String.valueOf(R.raw.main_list));
-            Scanner scnr = new Scanner(file);
-            while(scnr.hasNextLine()) {
-                String data = scnr.nextLine();
-                String[] dataParsed = data.split("@",5);
-                qList.add(dataParsed);     
-            }
-            scnr.close();
-        } 
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        //File file = new File(String.valueOf(R.raw.main_list));
+        Scanner scnr = new Scanner(context.getResources().openRawResource(R.raw.main_list));
+        while(scnr.hasNextLine()) {
+            String data = scnr.nextLine();
+            String[] dataParsed = data.split("@",5);
+            qList.add(dataParsed);
         }
+        scnr.close();
         Collections.shuffle(qList, rand);
     }
 
     //used when loading a save or choosing a specific seed
-    public Questions(Resources res, int index, boolean religionFlag, boolean plagueFlag, boolean magicFlag) {
+    public Questions(ResourceKeeper res, int index, boolean religionFlag, boolean plagueFlag, boolean magicFlag,Context context) {
         this.index = index;
         this.qList = new ArrayList<String[]>();
         this.res = res;
+        this.context = context;
         this.religionFlag = religionFlag;
         this.plagueFlag = plagueFlag;
         this.magicFlag = magicFlag;
         this.rand = new Random(res.getSeed());
 
         //parse the data from MainList into questions
-        try {
-            File file = new File(String.valueOf(R.raw.main_list));
-            Scanner scnr = new Scanner(file);
-            int i = 0;
-            while (scnr.hasNextLine()) {
-                String data = scnr.nextLine();
-                String[] dataParsed = data.split("@",5);
-                qList.add(dataParsed);
-                i++;     
-            }
-        scnr.close();
-        } 
-        catch (FileNotFoundException e) {
-            System.out.println("Error occurred while loading Qs into qList.");
-            e.printStackTrace();
+        //File file = new File(String.valueOf(R.raw.main_list));
+        Scanner scnr = new Scanner(context.getResources().openRawResource(R.raw.main_list));
+        int i = 0;
+        while (scnr.hasNextLine()) {
+            String data = scnr.nextLine();
+            String[] dataParsed = data.split("@",5);
+            qList.add(dataParsed);
+            i++;
         }
+        scnr.close();
         Collections.shuffle(qList, rand);
 
         //if needed add the other lists of questions
@@ -291,20 +284,14 @@ class Questions {
         
         //add the religion questions to templist if religionFlag is raised
         if(religionFlag) {
-            try {
-                File file = new File(String.valueOf(R.raw.religion_list));
-                Scanner scnr = new Scanner(file);
-                while (scnr.hasNextLine()) {
-                    String data = scnr.nextLine();
-                    String[] dataParsed = data.split("@",5);
-                    tempList.add(dataParsed);
-                }
-                scnr.close();
-            } 
-            catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+            //File file = new File(String.valueOf(R.raw.religion_list));
+            Scanner scnr = new Scanner(context.getResources().openRawResource(R.raw.religion_list));
+            while (scnr.hasNextLine()) {
+                String data = scnr.nextLine();
+                String[] dataParsed = data.split("@",5);
+                tempList.add(dataParsed);
             }
+            scnr.close();
         }
         //shuffle the resulting religion + upcoming list
         Random r = new Random(res.getSeed());

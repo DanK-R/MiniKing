@@ -3,16 +3,16 @@ package com.example.miniking;
 import android.widget.TextView;
 
 class Help {
-    private static Resources res;
+    private static ResourceKeeper res;
     private static TextView display;
-    public Help(Resources res) {
+    public Help(ResourceKeeper res) {
         this.res = res;
         helpView();
     }
     public Help() {
         helpView();
     }
-    public Help(Resources res, TextView display) {
+    public Help(ResourceKeeper res, TextView display) {
         this.res = res;
         this.display = display;
         helpView();

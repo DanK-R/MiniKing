@@ -4,7 +4,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,11 +11,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity{
+public class GameActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
 
         View decorView = getWindow().getDecorView();
         // Hide the status bar.
@@ -25,18 +25,16 @@ public class MainActivity extends AppCompatActivity{
         // Remember that you should never show the action bar if the
         // status bar is hidden, so hide that too if necessary.
         ActionBar actionBar = getSupportActionBar();
+
         if(actionBar != null){
             actionBar.hide();
         }
 
-        ImageButton newGameButton = findViewById(R.id.newGameButton);
-        ImageButton linkButton = findViewById(R.id.linkButton);
-        ImageButton continueButton = findViewById(R.id.continueButton);
-        ImageButton exitButton = findViewById(R.id.exitButton);
+        ImageButton yesButton = findViewById(R.id.yesButton);
+        ImageButton noButton = findViewById(R.id.noButton);
         ImageButton helpButton = findViewById(R.id.helpButton);
         ImageButton settingsButton = findViewById(R.id.settingsButton);
-        LinearLayout leftButtonsLayout =findViewById(R.id.leftButtonsLayout);
-        LinearLayout rightButtonsLayout =findViewById(R.id.rightButtonsLayout);
+        LinearLayout buttonsLayout =findViewById(R.id.buttonsLayout);
         FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
 
         helpButton.setOnClickListener(new View.OnClickListener() {
@@ -52,53 +50,19 @@ public class MainActivity extends AppCompatActivity{
                 //open settings page
                 if(settingsLayout.getVisibility() == View.VISIBLE) {
                     settingsLayout.setVisibility(View.INVISIBLE);
-                    leftButtonsLayout.setVisibility(View.VISIBLE);
-                    rightButtonsLayout.setVisibility(View.VISIBLE);
+                    buttonsLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     settingsLayout.setVisibility(View.VISIBLE);
-                    leftButtonsLayout.setVisibility(View.INVISIBLE);
-                    rightButtonsLayout.setVisibility(View.INVISIBLE);
+                    buttonsLayout.setVisibility(View.INVISIBLE);
                 }
-            }
-        });
-
-        newGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //start new game
-                startActivity(new Intent(MainActivity.this, GameActivity.class));
-            }
-        });
-        continueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //continue game from save
-            }
-        });
-        linkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //link to my stuff
-            }
-        });
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //exit the game
             }
         });
 
 
         TextView display = (TextView) findViewById(R.id.dialogTextView);
         DrawTitle.go(display);
-        DrawScene.close(display);
-        Printer.printyBox("Welcome, and Enjoy!",display);
-        DrawScene.close(display);
-
-
+        new GameLoop(this, display, yesButton, noButton) {
+        }.start();
     }
-
-
-
 }

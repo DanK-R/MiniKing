@@ -1,18 +1,18 @@
 package com.example.miniking;
 
-import android.widget.TextView;
+import android.content.Context;
 
 class Main {
     private static String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
     private static String lossText = "Ahhh Jeeez you lost? Big RIPs dude, wanna try again? ";
-    
-    public static void main(String[] args) {
+    private Context context;
+    public void main(String[] args) {
         DrawTitle.go();
         Asker begin = new Asker("Begin the Game?", false);
         int[] x = new int[1];
         if (begin.run()) {
-            Resources res = new Resources();
-            Questions q = new Questions(res);
+            ResourceKeeper res = new ResourceKeeper();
+            Questions q = new Questions(res, context);
             
             begin = new Asker("Continue Previous Game?", false);
             if (begin.run()) {

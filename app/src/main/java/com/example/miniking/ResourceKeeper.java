@@ -2,12 +2,10 @@ package com.example.miniking;
 
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.*;
 import java.io.*;
 
-class Resources {
+class ResourceKeeper {
     private int time;
     private int order;
     private int food;
@@ -19,7 +17,7 @@ class Resources {
     private TextView display;
 
     //used on new game
-    public Resources() {
+    public ResourceKeeper() {
         this.time = 1;
         this.order = 15;
         this.food = 15;
@@ -54,7 +52,7 @@ class Resources {
     }
 
     //used when loading games or choosing custom seed
-    public Resources(int time, int order, int food, int gold, int might, int seed) {
+    public ResourceKeeper(int time, int order, int food, int gold, int might, int seed) {
         this.time = time;
         this.order = order;
         this.food = food;
@@ -65,7 +63,7 @@ class Resources {
         this.rName = (NameGen.rivalName(rand));
     }
 
-    public Resources(TextView display) {
+    public ResourceKeeper(TextView display) {
         this.time = 1;
         this.order = 15;
         this.food = 15;
@@ -100,7 +98,7 @@ class Resources {
         this.rName = (NameGen.rivalName(rand));
     }
 
-    public Resources(int time, int order, int food, int gold, int might, int seed, TextView display) {
+    public ResourceKeeper(int time, int order, int food, int gold, int might, int seed, TextView display) {
         this.time = time;
         this.order = order;
         this.food = food;

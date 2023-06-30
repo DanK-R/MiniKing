@@ -1,7 +1,7 @@
 package com.example.miniking;
 
 class Debug {
-    public static String debug(Resources res, Questions q) {
+    public static String debug(ResourceKeeper res, Questions q) {
         return "Seed:  " + res.getSeed();
     }
 }

@@ -2,7 +2,7 @@ package com.example.miniking;//returns true if the player is in fail state
 import java.io.*;
 
 class Fail {
-    public static boolean check(Resources res) {
+    public static boolean check(ResourceKeeper res) {
         if(res.getOrder() <= 0 || 
             res.getFood() <= 0 ||
             res.getGold() <= 0 ||
@@ -20,7 +20,7 @@ class Fail {
         }
     }
 
-    public static void endGame(Resources res, Questions q) {
+    public static void endGame(ResourceKeeper res, Questions q) {
         DrawScene.open();
         System.out.println(Printer.Middle("Until Next Time Your Highness", 65));
         

@@ -1,8 +1,5 @@
 package com.example.miniking;//Displays the passed string, then returns true if input is affermative
-import android.service.autofill.OnClickAction;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,14 +10,14 @@ class Asker{
     private String question;
     private int answer;
     private boolean output;
-    private Resources res;
+    private ResourceKeeper res;
     private boolean clear;
     private ImageButton yesButton;
     private ImageButton noButton;
 
     private TextView display;
 
-    public Asker(String q, Resources res, boolean clear) {
+    public Asker(String q, ResourceKeeper res, boolean clear) {
         this.scn = new Scanner(System.in);
         this.question = q;
         this.res = res;
@@ -33,7 +30,7 @@ class Asker{
         this.clear = clear;
     }
 
-    public Asker(String q, Resources res, boolean clear, TextView display, ImageButton yesButton, ImageButton noButton) {
+    public Asker(String q, ResourceKeeper res, boolean clear, TextView display, ImageButton yesButton, ImageButton noButton) {
         this.scn = new Scanner(System.in);
         this.question = q;
         this.res = res;
@@ -75,10 +72,10 @@ class Asker{
                     @Override
                     public void run() {
                         super.run();
-                        yesButton.setBackgroundResource(R.drawable.yes_button_pressed);
+                        yesButton.setImageResource(R.drawable.yes_button_pressed_5by3);
                         try {
                             Thread.sleep(400);
-                            yesButton.setBackgroundResource(R.drawable.yes_button_unpressed);
+                            yesButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -95,10 +92,10 @@ class Asker{
                     @Override
                     public void run() {
                         super.run();
-                        noButton.setBackgroundResource(R.drawable.no_button_pressed);
+                        noButton.setImageResource(R.drawable.no_button_pressed_5by3);
                         try {
                             Thread.sleep(400);
-                            noButton.setBackgroundResource(R.drawable.no_button_unpressed);
+                            noButton.setImageResource(R.drawable.no_button_unpressed_5by3);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

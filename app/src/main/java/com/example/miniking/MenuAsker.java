@@ -1,20 +1,16 @@
 package com.example.miniking;//Main menu of the game
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.*;
-
 class MenuAsker {
     private TextView display;
     private String question;
     private boolean answer;
-    private Resources res;
+    private ResourceKeeper res;
     private boolean clear;
     private Questions qList;
     private static String menuText2 = "What is on the agenda your Highness?";
 
-    public MenuAsker(String q, Questions qList, Resources res, boolean clear) {
+    public MenuAsker(String q, Questions qList, ResourceKeeper res, boolean clear) {
         //this.scn = new Scanner(System.in);
         this.question = q;
         this.res = res;
@@ -22,7 +18,7 @@ class MenuAsker {
         this.qList = qList;
         run();
     }
-    public MenuAsker(String q, Questions qList, Resources res, boolean clear, TextView display) {
+    public MenuAsker(String q, Questions qList, ResourceKeeper res, boolean clear, TextView display) {
         //this.scn = new Scanner(System.in);
         this.question = q;
         this.res = res;
