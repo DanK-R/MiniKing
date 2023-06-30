@@ -21,11 +21,9 @@ public class GameLoop extends Thread{
     }
 
     public void run() {
-        Asker a1 = new Asker("Press a Button to Begin.", false, display, yesButton, noButton);
-        a1.run();
         display.setText("");
         Help h = new Help(display);
-        a1 = new Asker("Press a Button to Continue.", false, display, yesButton, noButton);
+        Asker a1 = new Asker("Press a Button to Continue.", false, display, yesButton, noButton);
         a1.run();
         ResourceKeeper res = new ResourceKeeper(display);
         Questions q = new Questions(res, context);

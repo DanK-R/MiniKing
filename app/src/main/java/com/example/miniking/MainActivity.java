@@ -67,7 +67,24 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 //start new game
-                startActivity(new Intent(MainActivity.this, GameActivity.class));
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        newGameButton.setImageResource(R.drawable.new_game_button_pressed_5by3);
+                        try {
+                            Thread.sleep(200);
+                            startActivity(new Intent(MainActivity.this, GameActivity.class));
+                            Thread.sleep(200);
+                            newGameButton.setImageResource(R.drawable.new_game_button_unpressed_5by3);
+
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
             }
         });
         continueButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +102,22 @@ public class MainActivity extends AppCompatActivity{
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //exit the game
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        exitButton.setImageResource(R.drawable.exit_button_pressed_5by3);
+                        try {
+                            Thread.sleep(200);
+                            finish();
+                            System.exit(0);
+
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
             }
         });
 

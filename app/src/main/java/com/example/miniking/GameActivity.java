@@ -61,7 +61,6 @@ public class GameActivity extends AppCompatActivity {
 
 
         TextView display = (TextView) findViewById(R.id.dialogTextView);
-        DrawTitle.go(display);
         new GameLoop(this, display, yesButton, noButton) {
         }.start();
     }
