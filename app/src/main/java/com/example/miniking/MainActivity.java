@@ -12,7 +12,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity{
+    private ImageButton newGameButton;
+    private ImageButton linkButton;
+    private ImageButton continueButton;
+    private ImageButton exitButton;
+    private ImageButton settingsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,22 +37,16 @@ public class MainActivity extends AppCompatActivity{
             actionBar.hide();
         }
 
-        ImageButton newGameButton = findViewById(R.id.newGameButton);
-        ImageButton linkButton = findViewById(R.id.linkButton);
-        ImageButton continueButton = findViewById(R.id.continueButton);
-        ImageButton exitButton = findViewById(R.id.exitButton);
-        ImageButton helpButton = findViewById(R.id.helpButton);
-        ImageButton settingsButton = findViewById(R.id.settingsButton);
+
+        newGameButton = findViewById(R.id.newGameButton);
+        linkButton = findViewById(R.id.linkButton);
+        continueButton = findViewById(R.id.continueButton);
+        exitButton = findViewById(R.id.exitButton);
+        settingsButton = findViewById(R.id.settingsButton);
         LinearLayout leftButtonsLayout =findViewById(R.id.leftButtonsLayout);
         LinearLayout rightButtonsLayout =findViewById(R.id.rightButtonsLayout);
         FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
 
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open the help view again
-            }
-        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,17 +54,37 @@ public class MainActivity extends AppCompatActivity{
                 //open settings page
                 if(settingsLayout.getVisibility() == View.VISIBLE) {
                     settingsLayout.setVisibility(View.INVISIBLE);
-                    leftButtonsLayout.setVisibility(View.VISIBLE);
-                    rightButtonsLayout.setVisibility(View.VISIBLE);
+                    newGameButton.setEnabled(true);
+                    continueButton.setEnabled(true);
+                    linkButton.setEnabled(true);
+                    exitButton.setEnabled(true);
+//                    leftButtonsLayout.setVisibility(View.VISIBLE);
+//                    rightButtonsLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     settingsLayout.setVisibility(View.VISIBLE);
-                    leftButtonsLayout.setVisibility(View.INVISIBLE);
-                    rightButtonsLayout.setVisibility(View.INVISIBLE);
+                    newGameButton.setEnabled(false);
+                    continueButton.setEnabled(false);
+                    linkButton.setEnabled(false);
+                    exitButton.setEnabled(false);
+//                    leftButtonsLayout.setVisibility(View.INVISIBLE);
+//                    rightButtonsLayout.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
+        buttonListenerSetup();
+
+        TextView display = (TextView) findViewById(R.id.dialogTextView);
+        DrawTitle.go(display);
+        DrawScene.close(display);
+        Printer.printyBox("Welcome, and Enjoy!",display);
+        DrawScene.close(display);
+
+
+    }
+
+    private void buttonListenerSetup() {
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +112,50 @@ public class MainActivity extends AppCompatActivity{
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //continue game from save
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        continueButton.setImageResource(R.drawable.continue_button_pressed_5by3);
+                        try {
+                            Thread.sleep(200);
+                            //continue game from save
+
+                            Thread.sleep(200);
+                            continueButton.setImageResource(R.drawable.continue_button_unpressed_5by3);
+
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
+
             }
         });
         linkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //link to my stuff
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        linkButton.setImageResource(R.drawable.link_button_pressed_5by3);
+                        try {
+                            Thread.sleep(200);
+                            //link to my stuff
+
+                            Thread.sleep(200);
+                            linkButton.setImageResource(R.drawable.link_button_unpressed_5by3);
+
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }.start();
             }
         });
         exitButton.setOnClickListener(new View.OnClickListener() {
@@ -120,17 +179,6 @@ public class MainActivity extends AppCompatActivity{
                 }.start();
             }
         });
-
-
-        TextView display = (TextView) findViewById(R.id.dialogTextView);
-        DrawTitle.go(display);
-        DrawScene.close(display);
-        Printer.printyBox("Welcome, and Enjoy!",display);
-        DrawScene.close(display);
-
-
     }
-
-
 
 }

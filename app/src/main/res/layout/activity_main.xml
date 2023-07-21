@@ -96,6 +96,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,14 +114,14 @@
                 android:background="@drawable/rounded_edges_light"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/helpButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="2.5dp"
-                    android:layout_marginLeft="5dp"
-                    app:srcCompat="@android:drawable/ic_dialog_info" />
+<!--                <ImageButton-->
+<!--                    android:id="@+id/helpButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginRight="2.5dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    app:srcCompat="@android:drawable/ic_dialog_info" />-->
 
                 <ImageButton
                     android:id="@+id/settingsButton"

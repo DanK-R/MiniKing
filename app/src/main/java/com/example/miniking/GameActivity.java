@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,11 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
-
+    GameActivity gameActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        gameActivity = GameActivity.this;
 
         View decorView = getWindow().getDecorView();
         // Hide the status bar.
@@ -30,38 +32,44 @@ public class GameActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        ImageButton yesButton = findViewById(R.id.yesButton);
-        ImageButton noButton = findViewById(R.id.noButton);
-        ImageButton helpButton = findViewById(R.id.helpButton);
+        ImageButton yesDutyButton = findViewById(R.id.yesDutyButton);
+        ImageButton noExitButton = findViewById(R.id.noExitButton);
         ImageButton settingsButton = findViewById(R.id.settingsButton);
+        ImageButton mapButton = findViewById(R.id.mapButton);
+        ImageButton helpButton = findViewById(R.id.helpButton);
         LinearLayout buttonsLayout =findViewById(R.id.buttonsLayout);
         FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
-
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open the help view again
-            }
-        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //open settings page
                 if(settingsLayout.getVisibility() == View.VISIBLE) {
+
+                    yesDutyButton.setEnabled(true);
+                    noExitButton.setEnabled(true);
                     settingsLayout.setVisibility(View.INVISIBLE);
-                    buttonsLayout.setVisibility(View.VISIBLE);
                 }
                 else {
+                    yesDutyButton.setEnabled(false);
+                    noExitButton.setEnabled(false);
                     settingsLayout.setVisibility(View.VISIBLE);
-                    buttonsLayout.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
-
         TextView display = (TextView) findViewById(R.id.dialogTextView);
-        new GameLoop(this, display, yesButton, noButton) {
+        new GameLoop(this, display, yesDutyButton, noExitButton, mapButton, helpButton, gameActivity){
         }.start();
+    }
+
+    public void toggleButtonLayout(ImageButton btn) {
+        if(btn.getVisibility() == View.GONE) {
+            btn.setVisibility(View.VISIBLE);
+        }
+        else {
+            btn.setVisibility(View.GONE);
+        }
+
     }
 }
