@@ -21,6 +21,8 @@ public class GameLoop extends Thread{
     private ImageButton mapButton;
     private ImageButton helpButton;
     private GameActivity gameActivity;
+    private boolean acknowledged;
+    private boolean response;
 
     public GameLoop(Context context, TextView display, ImageButton yesDutyButton, ImageButton noExitButton, ImageButton mapButton, ImageButton helpButton, GameActivity gameActivity) {
         this.context = context;
@@ -36,26 +38,22 @@ public class GameLoop extends Thread{
     public void run() {
         display.setText("");
         Help h = new Help(display);
-        Asker a1 = new Asker("Press a Button to Continue.", false, display, yesDutyButton, noExitButton);
-        a1.run();
+        Asker a1 = new Asker("Press a Button to Continue.", false, display);
+        a1.draw();
+        callAcknowledgement();
+
         ResourceKeeper res = new ResourceKeeper(display);
         Questions q = new Questions(res, context);
-        gameActivity.runOnUiThread(() -> {
 
-            // Stuff that updates the UI
-            //Make the other buttons visible
-            mapButton.setVisibility(View.VISIBLE);
-            helpButton.setVisibility(View.VISIBLE);
-
-            //Change the button images.
-            //to do
-        });
         callMenu(q, res);
     }
 
     private void callMenu(Questions q, ResourceKeeper res) {
         MenuAsker menu = new MenuAsker(menuText, q, res, yesDutyButton, mapButton, helpButton, noExitButton, true, display);
         buttonListenerSetup("menu");
+        if(mapButton.getVisibility() == View.GONE) {
+            toggleButtonLayout();
+        }
     }
 
     private void callDuty() {
@@ -68,6 +66,7 @@ public class GameLoop extends Thread{
 
     private void callHelp() {
 
+        buttonListenerSetup("acknowledge");
     }
 
     private void callExit() {
@@ -75,8 +74,151 @@ public class GameLoop extends Thread{
         gameActivity.finish();
     }
 
+    private boolean callAcknowledgement() {
+        //changes the buttons to just acknowledge the prompt
+        //changes the layout to 2 button
+        //returns true or false
+        buttonListenerSetup("acknowledge");
+
+        if(mapButton.getVisibility() == View.VISIBLE){
+            toggleButtonLayout();
+        }
+
+        waitForAcknowledgment();
+
+        return response;
+    }
+
+    private void waitForAcknowledgment() {
+        acknowledged = false;
+
+        while(!acknowledged) {
+            try {
+                currentThread().sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void toggleButtonLayout() {
+        gameActivity.runOnUiThread(() -> {
+            //toggle button visibility
+            if(mapButton.getVisibility() == View.GONE){
+                mapButton.setEnabled(true);
+                mapButton.setVisibility(View.VISIBLE);
+                helpButton.setEnabled(true);
+                helpButton.setVisibility(View.VISIBLE);
+            }
+            else {
+                mapButton.setEnabled(false);
+                mapButton.setVisibility(View.GONE);
+                helpButton.setEnabled(false);
+                helpButton.setVisibility(View.GONE);
+            }
+
+            //Change the button images.
+            //to do in the listenerSetup
+        });
+    }
+
     private void buttonListenerSetup(String type) {
         if(Objects.equals(type, "menu")){
+            yesDutyButton.setImageResource(R.drawable.duty_button_unpressed_5by3);
+            yesDutyButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            yesDutyButton.setImageResource(R.drawable.duty_button_pressed_5by3);
+                            try {
+                                Thread.sleep(400);
+                                //call duty here
+
+                                yesDutyButton.setImageResource(R.drawable.duty_button_unpressed_5by3);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    }.start();
+                }
+            });
+            mapButton.setImageResource(R.drawable.map_button_unpressed_5by3);
+            mapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            mapButton.setImageResource(R.drawable.map_button_pressed_5by3);
+                            try {
+                                Thread.sleep(400);
+                                //call map here
+
+                                mapButton.setImageResource(R.drawable.map_button_unpressed_5by3);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    }.start();
+                }
+            });
+            helpButton.setImageResource(R.drawable.help_button_unpressed_5by3);
+            helpButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            helpButton.setImageResource(R.drawable.help_button_pressed_5by3);
+                            try {
+                                Thread.sleep(400);
+                                //call help here
+
+                                helpButton.setImageResource(R.drawable.help_button_unpressed_5by3);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    }.start();
+                }
+            });
+            noExitButton.setImageResource(R.drawable.exit_button_unpressed_5by3);
+            noExitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            noExitButton.setImageResource(R.drawable.exit_button_pressed_5by3);
+                            try {
+                                Thread.sleep(400);
+                                //call exit here
+                                callExit();
+
+                                noExitButton.setImageResource(R.drawable.exit_button_unpressed_5by3);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    }.start();
+                }
+            });
+        }
+
+        else if(Objects.equals(type, "acknowledge")){
+            //switch to 2 button yes or no
+            yesDutyButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
             yesDutyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,10 +228,11 @@ public class GameLoop extends Thread{
                             super.run();
                             yesDutyButton.setImageResource(R.drawable.yes_button_pressed_5by3);
                             try {
-                                Thread.sleep(200);
-                                //call duty here
+                                Thread.sleep(400);
 
-                                Thread.sleep(200);
+                                response = true;
+                                acknowledged = true;
+
                                 yesDutyButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
@@ -99,50 +242,8 @@ public class GameLoop extends Thread{
                     }.start();
                 }
             });
-            mapButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            mapButton.setImageResource(R.drawable.yes_button_pressed_5by3);
-                            try {
-                                Thread.sleep(200);
-                                //call map here
 
-                                Thread.sleep(200);
-                                mapButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                        }
-                    }.start();
-                }
-            });
-            helpButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            helpButton.setImageResource(R.drawable.yes_button_pressed_5by3);
-                            try {
-                                Thread.sleep(200);
-                                //call help here
-
-                                Thread.sleep(200);
-                                helpButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                        }
-                    }.start();
-                }
-            });
+            noExitButton.setImageResource(R.drawable.no_button_unpressed_5by3);
             noExitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,14 +251,14 @@ public class GameLoop extends Thread{
                         @Override
                         public void run() {
                             super.run();
-                            noExitButton.setImageResource(R.drawable.yes_button_pressed_5by3);
+                            noExitButton.setImageResource(R.drawable.no_button_pressed_5by3);
                             try {
-                                Thread.sleep(200);
-                                //call exit here
-                                callExit();
+                                Thread.sleep(400);
 
-                                Thread.sleep(200);
-                                noExitButton.setImageResource(R.drawable.yes_button_unpressed_5by3);
+                                response = false;
+                                acknowledged = true;
+
+                                noExitButton.setImageResource(R.drawable.no_button_unpressed_5by3);
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }

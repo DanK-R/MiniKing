@@ -49,6 +49,21 @@ class Asker{
         this.noButton = noButton;
     }
 
+    public Asker(String q, ResourceKeeper res, boolean clear, TextView display) {
+        this.scn = new Scanner(System.in);
+        this.question = q;
+        this.res = res;
+        this.clear = clear;
+        this.display = display;
+    }
+
+    public Asker(String q, boolean clear, TextView display) {
+        //this.scn = new Scanner(System.in);
+        this.question = q;
+        this.clear = clear;
+        this.display = display;
+    }
+
     public boolean run() {
         boolean output = false;
         answer = 0;
@@ -134,5 +149,19 @@ class Asker{
 
          */
         return output;
+    }
+
+    public void draw() {
+        if(clear) {
+            display.setText("");
+        }
+        DrawScene.open(display);
+        if(res != null) {
+            res.draw();
+            DrawScene.close(display);
+        }
+
+        Printer.printyBox(question, display);
+        DrawScene.close(display);
     }
 }

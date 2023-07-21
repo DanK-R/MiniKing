@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.net.URI;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity{
@@ -147,6 +149,9 @@ public class MainActivity extends AppCompatActivity{
                             Thread.sleep(200);
                             //link to my stuff
 
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("https://github.com/DanK-R"));
+                            startActivity(browserIntent);
                             Thread.sleep(200);
                             linkButton.setImageResource(R.drawable.link_button_unpressed_5by3);
 
