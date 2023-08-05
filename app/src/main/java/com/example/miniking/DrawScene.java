@@ -18,11 +18,11 @@ class DrawScene {
     }
 
     public static void open(TextView display) {
-        display.append("#####################################################");
+        display.append("#####################################################\n");
     }
 
     public static void close(TextView display) {
-        display.append("#####################################################");
+        display.append("#####################################################\n");
     }
 
 }

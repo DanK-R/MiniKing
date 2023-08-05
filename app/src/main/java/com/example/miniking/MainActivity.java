@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -40,11 +41,13 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+
+
         newGameButton = findViewById(R.id.newGameButton);
         linkButton = findViewById(R.id.linkButton);
         continueButton = findViewById(R.id.continueButton);
         exitButton = findViewById(R.id.exitButton);
-        settingsButton = findViewById(R.id.settingsButton);
+        settingsButton = findViewById(R.id.settingsButtonMain);
         LinearLayout leftButtonsLayout =findViewById(R.id.leftButtonsLayout);
         LinearLayout rightButtonsLayout =findViewById(R.id.rightButtonsLayout);
         FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
@@ -78,6 +81,10 @@ public class MainActivity extends AppCompatActivity{
         buttonListenerSetup();
 
         TextView display = (TextView) findViewById(R.id.dialogTextView);
+
+
+
+
         DrawTitle.go(display);
         DrawScene.close(display);
         Printer.printyBox("Welcome, and Enjoy!",display);

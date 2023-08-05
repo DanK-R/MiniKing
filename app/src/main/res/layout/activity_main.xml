@@ -48,7 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Settings"
-                android:textSize="30dp"/>
+                android:textSize="30dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,7 +125,7 @@
 <!--                    app:srcCompat="@android:drawable/ic_dialog_info" />-->
 
                 <ImageButton
-                    android:id="@+id/settingsButton"
+                    android:id="@+id/settingsButtonMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -151,10 +152,10 @@
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="@string/DialogBox"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="12dp"
-            android:typeface="normal" />
+            android:textSize="10dp"/>
+
 
         <Space
             android:layout_width="match_parent"

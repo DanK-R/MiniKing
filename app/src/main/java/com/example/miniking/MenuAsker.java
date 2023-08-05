@@ -125,13 +125,9 @@ class MenuAsker {
         Printer.printyBox("            Explination of mechanics.", display);
         Printer.printyBox("     End:",display);
         Printer.printyBox("            Exit the game.", display);
-        /*
-        Printer.printyBox("            Exit game.",display);
         Printer.printyBox("", display);
 
-         */
-        DrawScene.close(display);
 
-        Printer.printyBox("Your Reply: ", display);
+        DrawScene.close(display);
     }
 }

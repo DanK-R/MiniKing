@@ -3,10 +3,15 @@ package com.example.miniking;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,18 +53,35 @@ public class SaveDataParser {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     public void saveGame() {
         //save date to json file
         try {
-            fileWriter.write("testing");
+            JSONObject saveJSON = new JSONObject();
+            saveJSON.append("index", q.getIndex());
+            saveJSON.append("time", res.getTime());
+            saveJSON.append("order", res.getOrder());
+            saveJSON.append("food", res.getFood());
+            saveJSON.append("gold", res.getGold());
+            saveJSON.append("might", res.getMight());
+            saveJSON.append("seed", res.getSeed());
+            saveJSON.append("religionFlag", q.getReligionFlag());
+            saveJSON.append("magicFlag", q.getMagicFlag());
+            saveJSON.append("plagueFlag", q.getPlagueFlag());
+
+            fileWriter.write(saveJSON.toString());
             fileWriter.flush();
         } catch (IOException e) {
+            Log.e(TAG, String.valueOf(e));
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
             Log.e(TAG, String.valueOf(e));
             throw new RuntimeException(e);
         }
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     public void openGame() {
         //get data from json file
         try {
@@ -69,8 +91,8 @@ public class SaveDataParser {
             while((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            JSONObject saveJSON = new JSONObject(stringBuilder.toString());
-
+            JSONObject saveJSON = (JSONObject) new JSONTokener(stringBuilder.toString()).nextValue();
+            System.out.println(saveJSON);
         }
         catch (FileNotFoundException e) {
             Log.e(TAG, String.valueOf(e));

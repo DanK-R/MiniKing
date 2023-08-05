@@ -163,5 +163,16 @@ class Asker{
 
         Printer.printyBox(question, display);
         DrawScene.close(display);
+
+    }
+
+    public void acknowledge() {
+        Printer.printyBox("Press any button to continue.", display);
+        DrawScene.close(display);
+    }
+
+    public void choice() {
+        Printer.printyBox("Make your decision.", display);
+        DrawScene.close(display);
     }
 }

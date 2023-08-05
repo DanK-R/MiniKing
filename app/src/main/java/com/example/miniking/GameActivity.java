@@ -2,14 +2,10 @@ package com.example.miniking;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
@@ -37,39 +33,33 @@ public class GameActivity extends AppCompatActivity {
         ImageButton settingsButton = findViewById(R.id.settingsButton);
         ImageButton mapButton = findViewById(R.id.mapButton);
         ImageButton helpButton = findViewById(R.id.helpButton);
-        LinearLayout buttonsLayout =findViewById(R.id.buttonsLayout);
         FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open settings page
-                if(settingsLayout.getVisibility() == View.VISIBLE) {
+        settingsButton.setOnClickListener(v -> {
+            //open settings page
+            if(settingsLayout.getVisibility() == View.VISIBLE) {
 
-                    yesDutyButton.setEnabled(true);
-                    noExitButton.setEnabled(true);
-                    settingsLayout.setVisibility(View.INVISIBLE);
+                yesDutyButton.setEnabled(true);
+                noExitButton.setEnabled(true);
+                if(mapButton.getVisibility() == View.VISIBLE) {
+                    mapButton.setEnabled(true);
+                    helpButton.setEnabled(true);
                 }
-                else {
-                    yesDutyButton.setEnabled(false);
-                    noExitButton.setEnabled(false);
-                    settingsLayout.setVisibility(View.VISIBLE);
+                settingsLayout.setVisibility(View.INVISIBLE);
+            }
+            else {
+                yesDutyButton.setEnabled(false);
+                noExitButton.setEnabled(false);
+                if(mapButton.getVisibility() == View.VISIBLE) {
+                    mapButton.setEnabled(false);
+                    helpButton.setEnabled(false);
                 }
+                settingsLayout.setVisibility(View.VISIBLE);
             }
         });
 
-        TextView display = (TextView) findViewById(R.id.dialogTextView);
+        TextView display = findViewById(R.id.dialogTextView);
         new GameLoop(this, display, yesDutyButton, noExitButton, mapButton, helpButton, gameActivity){
         }.start();
-    }
-
-    public void toggleButtonLayout(ImageButton btn) {
-        if(btn.getVisibility() == View.GONE) {
-            btn.setVisibility(View.VISIBLE);
-        }
-        else {
-            btn.setVisibility(View.GONE);
-        }
-
     }
 }

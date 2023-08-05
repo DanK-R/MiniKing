@@ -151,10 +151,10 @@
             android:paddingRight="5dp"
             android:paddingBottom="2dp"
             android:text="@string/DialogBox"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="12dp"
-            android:typeface="normal" />
+            android:textSize="10dp"
+            />
 
         <Space
             android:layout_width="match_parent"

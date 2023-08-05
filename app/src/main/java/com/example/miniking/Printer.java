@@ -96,31 +96,32 @@ class Printer {
                 }
 
                 //System.out.println(sb.toString());
-                display.append("\n");
-                display.append(sb.toString());
+                //display.append("\n");
+                display.append(sb.toString() + "\n");
                 sb = new StringBuffer();
                 sb.append("#  ");
             }
             else {
                 sb.append(outStrings[i] + " ");
 
-                if(i == outStrings.length - 1) {
+                if (i == outStrings.length - 1) {
                     int start = sb.length();
-                    for(int k = 0; k < width - start; k++) {
+                    for (int k = 0; k < width - start; k++) {
                         sb.append(" ");
-                        if(sb.length() == width - 1) {
+                        if (sb.length() == width - 1) {
                             sb.append("#");
                             k++;
                         }
                     }
                     //System.out.println(sb.toString());
-                    display.append("\n");
+                    //display.append("\n");
                     display.append(sb.toString());
                     sb = new StringBuffer();
                 }
                 i++;
             }
         }
+        display.append("\n");
     }
 
     //width is the amount of chars between the #s

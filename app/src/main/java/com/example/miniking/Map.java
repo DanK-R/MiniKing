@@ -1,5 +1,7 @@
 package com.example.miniking;
 
+import android.widget.TextView;
+
 class Map {
     private static String[] map = {
         "####################################################",
@@ -29,10 +31,10 @@ class Map {
         "#                #                #                #",
         "#                #                #                #",
         "#                #                #                #",
+        "####################################################"
     };
 
     private static String[] rival = {
-        "#                #",
         "#     &&  &&     #",
         "#       &&       #",
         "#      &&&&      #",
@@ -47,14 +49,14 @@ class Map {
     //8 4
     //765
     
-    public static void mapView(ResourceKeeper res) {
+    public static void mapView(ResourceKeeper res, TextView display) {
         //DrawScene.clear();
         
         String[] mapT = map;
         int rivalDat = res.getSeedIndex(0);
         
         //add rival name under the art here
-        rival[8] = Printer.Middle(res.getRivalName(), 21);
+        rival[7] = Printer.Middle(res.getRivalName(), 16);
         //
         int startPointY;
         int startPointX;
@@ -63,35 +65,39 @@ class Map {
             startPointY = 1;
         }
         else if(rivalDat == 4 || rivalDat == 8) {
-            startPointY = 11;
+            startPointY = 10;
         }
         else {
-            startPointY = 21;
+            startPointY = 19;
         }
         //get x 
         if(rivalDat == 1 || rivalDat == 8 || rivalDat == 7) {
             startPointX = 0;
         }
         else if(rivalDat == 2 || rivalDat == 6) {
-            startPointX = 22;
+            startPointX = 17;
         }
         else {
-            startPointX = 44;
+            startPointX = 34;
         }
         
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < rival.length; i++) {
             StringBuffer sb = new StringBuffer();
             sb.append(mapT[startPointY + i]);
-            sb.replace(startPointX, startPointX + 23,rival[i]);
+            sb.replace(startPointX, startPointX + 18,rival[i]);
             mapT[startPointY + i] = sb.toString();
         }
 
         //draw the map
+        display.setText("");
         for(int i = 0; i < map.length; i++) {
-            System.out.println(mapT[i]);
+            if(i != 0) {
+                display.append("\n");
+            }
+            display.append(mapT[i]);
+            //System.out.println(mapT[i]);
         }
-        DrawScene.close();
-        EnterAsker eAsker = new EnterAsker(false);
+        //EnterAsker eAsker = new EnterAsker(false);
     }
 
     //11
