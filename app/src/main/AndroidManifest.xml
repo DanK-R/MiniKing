@@ -18,7 +18,8 @@
             android:name=".GameActivity"
             android:exported="false"
             android:theme="@style/Theme.MiniKing"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:noHistory="true">
 
         </activity>
         <activity

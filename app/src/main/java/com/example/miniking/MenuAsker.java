@@ -38,7 +38,6 @@ class MenuAsker {
         this.helpButton = helpButton;
         this.dutyButton = dutyButton;
         this.exitButton = exitButton;
-        run();
     }
 
     public void run() {

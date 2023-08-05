@@ -31,7 +31,7 @@ class Map {
         "#                #                #                #",
         "#                #                #                #",
         "#                #                #                #",
-        "####################################################"
+        "#####################################################\n"
     };
 
     private static String[] rival = {
@@ -90,7 +90,7 @@ class Map {
 
         //draw the map
         display.setText("");
-        for(int i = 0; i < map.length; i++) {
+        for(int i = 0; i < mapT.length; i++) {
             if(i != 0) {
                 display.append("\n");
             }
