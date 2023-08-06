@@ -3,19 +3,13 @@ package com.example.miniking;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.net.URI;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity{
     private ImageButton newGameButton;
@@ -23,6 +17,13 @@ public class MainActivity extends AppCompatActivity{
     private ImageButton continueButton;
     private ImageButton exitButton;
     private ImageButton settingsButton;
+    private ImageButton saveButton1;
+    private ImageButton saveButton2;
+    private ImageButton saveButton3;
+    private ImageButton saveExitButton;
+    private FrameLayout savesLayout;
+    private FrameLayout settingsLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,35 +49,15 @@ public class MainActivity extends AppCompatActivity{
         continueButton = findViewById(R.id.continueButton);
         exitButton = findViewById(R.id.exitButton);
         settingsButton = findViewById(R.id.settingsButtonMain);
-        LinearLayout leftButtonsLayout =findViewById(R.id.leftButtonsLayout);
-        LinearLayout rightButtonsLayout =findViewById(R.id.rightButtonsLayout);
-        FrameLayout settingsLayout = findViewById(R.id.settingsLayout);
+        saveButton1 = findViewById(R.id.saveButton1);
+        saveButton2 = findViewById(R.id.saveButton2);
+        saveButton3 = findViewById(R.id.saveButton3);
+        savesLayout = findViewById(R.id.savesLayout);
+        saveExitButton = findViewById(R.id.saveExitButton);
+        settingsLayout = findViewById(R.id.settingsLayout);
 
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open settings page
-                if(settingsLayout.getVisibility() == View.VISIBLE) {
-                    settingsLayout.setVisibility(View.INVISIBLE);
-                    newGameButton.setEnabled(true);
-                    continueButton.setEnabled(true);
-                    linkButton.setEnabled(true);
-                    exitButton.setEnabled(true);
-//                    leftButtonsLayout.setVisibility(View.VISIBLE);
-//                    rightButtonsLayout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    settingsLayout.setVisibility(View.VISIBLE);
-                    newGameButton.setEnabled(false);
-                    continueButton.setEnabled(false);
-                    linkButton.setEnabled(false);
-                    exitButton.setEnabled(false);
-//                    leftButtonsLayout.setVisibility(View.INVISIBLE);
-//                    rightButtonsLayout.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+
 
         buttonListenerSetup();
 
@@ -140,7 +121,7 @@ public class MainActivity extends AppCompatActivity{
 
                     }
                 }.start();
-
+                toggleSaveView();
             }
         });
         linkButton.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +172,113 @@ public class MainActivity extends AppCompatActivity{
                 }.start();
             }
         });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open settings page
+                if(settingsLayout.getVisibility() == View.VISIBLE) {
+                    settingsLayout.setVisibility(View.INVISIBLE);
+                    newGameButton.setEnabled(true);
+                    continueButton.setEnabled(true);
+                    linkButton.setEnabled(true);
+                    exitButton.setEnabled(true);
+//                    leftButtonsLayout.setVisibility(View.VISIBLE);
+//                    rightButtonsLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    settingsLayout.setVisibility(View.VISIBLE);
+                    newGameButton.setEnabled(false);
+                    continueButton.setEnabled(false);
+                    linkButton.setEnabled(false);
+                    exitButton.setEnabled(false);
+//                    leftButtonsLayout.setVisibility(View.INVISIBLE);
+//                    rightButtonsLayout.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        saveButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        //Load save 1 action here
+
+
+                    }
+                }.start();
+            }
+        });
+
+        saveButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        //Load save 2 action here
+
+
+                    }
+                }.start();
+            }
+        });
+
+        saveButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        //Load save 3 action here
+
+
+                    }
+                }.start();
+            }
+        });
+
+        saveExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSaveView();
+
+            }
+        });
+    }
+
+    void toggleSaveView() {
+        if(savesLayout.getVisibility() == View.VISIBLE) {
+            savesLayout.setVisibility(View.INVISIBLE);
+            saveButton1.setEnabled(false);
+            saveButton2.setEnabled(false);
+            saveButton3.setEnabled(false);
+            saveExitButton.setEnabled(false);
+
+            newGameButton.setEnabled(true);
+            continueButton.setEnabled(true);
+            linkButton.setEnabled(true);
+            exitButton.setEnabled(true);
+
+        }
+        else {
+            savesLayout.setVisibility(View.VISIBLE);
+            saveButton1.setEnabled(true);
+            saveButton2.setEnabled(true);
+            saveButton3.setEnabled(true);
+            saveExitButton.setEnabled(true);
+
+            newGameButton.setEnabled(false);
+            continueButton.setEnabled(false);
+            linkButton.setEnabled(false);
+            exitButton.setEnabled(false);
+
+        }
     }
 
 }

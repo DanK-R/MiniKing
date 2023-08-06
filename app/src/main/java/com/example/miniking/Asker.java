@@ -161,7 +161,7 @@ class Asker{
             DrawScene.close(display);
         }
 
-        Printer.printyBox(question, display);
+        Printer.printyBoxReplacer(question, res, display);
         DrawScene.close(display);
 
     }

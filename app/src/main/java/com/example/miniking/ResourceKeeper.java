@@ -13,7 +13,9 @@ class ResourceKeeper {
     private int might;
     private int seed;
     private Random rand;
-    private String rName;
+    private String rivalName;
+    private String magicianName;
+    private String religionName;
     private TextView display;
 
     //used on new game
@@ -48,7 +50,7 @@ class ResourceKeeper {
 
         //seeded random rival name
         this.rand = new Random(seed);
-        this.rName = (NameGen.rivalName(rand));
+        this.rivalName = (NameGen.rivalName(rand));
     }
 
     //used when loading games or choosing custom seed
@@ -60,7 +62,9 @@ class ResourceKeeper {
         this.might = might;
         this.seed = seed;
         this.rand = new Random(seed);
-        this.rName = (NameGen.rivalName(rand));
+        this.rivalName = (NameGen.rivalName(rand));
+        this.religionName = (NameGen.religionName(rand));
+        this.magicianName = (NameGen.magicianName(rand));
     }
 
     public ResourceKeeper(TextView display) {
@@ -95,7 +99,9 @@ class ResourceKeeper {
 
         //seeded random rival name
         this.rand = new Random(seed);
-        this.rName = (NameGen.rivalName(rand));
+        this.rivalName = (NameGen.rivalName(rand));
+        this.religionName = (NameGen.religionName(rand));
+        this.magicianName = (NameGen.magicianName(rand));
     }
 
     public ResourceKeeper(int time, int order, int food, int gold, int might, int seed, TextView display) {
@@ -106,7 +112,9 @@ class ResourceKeeper {
         this.might = might;
         this.seed = seed;
         this.rand = new Random(seed);
-        this.rName = (NameGen.rivalName(rand));
+        this.rivalName = (NameGen.rivalName(rand));
+        this.religionName = (NameGen.religionName(rand));
+        this.magicianName = (NameGen.magicianName(rand));
         this.display = display;
     }
 
@@ -183,7 +191,13 @@ class ResourceKeeper {
     }
 
     public String getRivalName() {
-        return rName;
+        return rivalName;
+    }
+    public String getReligionName() {
+        return religionName;
+    }
+    public String getMagicianName() {
+        return magicianName;
     }
     
     //get the specified index of the seed
