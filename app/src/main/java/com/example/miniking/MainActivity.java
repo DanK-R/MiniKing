@@ -1,10 +1,12 @@
 package com.example.miniking;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity{
     private FrameLayout settingsLayout;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,39 @@ public class MainActivity extends AppCompatActivity{
         saveExitButton = findViewById(R.id.saveExitButton);
         settingsLayout = findViewById(R.id.settingsLayout);
 
+        TextView save1TextView = findViewById(R.id.save1TextView);
+        TextView save2TextView = findViewById(R.id.save2TextView);
+        TextView save3TextView = findViewById(R.id.save3TextView);
 
+        SaveDataParser sdp1 = new SaveDataParser(this, null, null, "save1");
+        SaveDataParser sdp2 = new SaveDataParser(this, null, null, "save2");
+        SaveDataParser sdp3 = new SaveDataParser(this, null, null, "save3");
+
+        String date1;
+        if(sdp1.getValidity()) {
+            date1 = sdp1.getDate();
+        }
+        else {
+            date1 = "EMPTY";
+        }
+        String date2;
+        if(sdp2.getValidity()) {
+             date2 = sdp2.getDate();
+        }
+        else {
+            date2 = "EMPTY";
+        }
+        String date3;
+        if(sdp3.getValidity()) {
+            date3 = sdp3.getDate();
+        }
+        else {
+            date3 = "EMPTY";
+        }
+
+        save1TextView.setText(date1);
+        save2TextView.setText(date2);
+        save3TextView.setText(date3);
 
 
         buttonListenerSetup();
@@ -87,7 +122,9 @@ public class MainActivity extends AppCompatActivity{
                         newGameButton.setImageResource(R.drawable.new_game_button_pressed_5by3);
                         try {
                             Thread.sleep(200);
-                            startActivity(new Intent(MainActivity.this, GameActivity.class));
+                            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                            intent.putExtra("saveSlot", "no");
+                            startActivity(intent);
                             Thread.sleep(200);
                             newGameButton.setImageResource(R.drawable.new_game_button_unpressed_5by3);
 
@@ -206,6 +243,9 @@ public class MainActivity extends AppCompatActivity{
                     public void run() {
                         super.run();
                         //Load save 1 action here
+                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.putExtra("saveSlot", "save1");
+                        startActivity(intent);
 
 
                     }
@@ -221,7 +261,9 @@ public class MainActivity extends AppCompatActivity{
                     public void run() {
                         super.run();
                         //Load save 2 action here
-
+                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.putExtra("saveSlot", "save2");
+                        startActivity(intent);
 
                     }
                 }.start();
@@ -236,7 +278,9 @@ public class MainActivity extends AppCompatActivity{
                     public void run() {
                         super.run();
                         //Load save 3 action here
-
+                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.putExtra("saveSlot", "save3");
+                        startActivity(intent);
 
                     }
                 }.start();

@@ -1,17 +1,26 @@
 package com.example.miniking;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GameActivity extends AppCompatActivity {
     GameActivity gameActivity;
+    private static final String TAG = "GameActivity";
     private final String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
     private final String lossText = "Ahhh Jeeez you lost? Big RIPs dude, wanna try again? ";
     private TextView display;
@@ -20,12 +29,20 @@ public class GameActivity extends AppCompatActivity {
     private ImageButton mapButton;
     private ImageButton helpButton;
     private ImageButton settingsButton;
+    private ImageButton saveButton1;
+    private ImageButton saveButton2;
+    private ImageButton saveButton3;
+    private ImageButton saveExitButton;
     private boolean acknowledged;
     private boolean response;
     private ResourceKeeper res;
     private Questions q;
     private boolean in4ButtonLayout;
     private FrameLayout settingsLayout;
+    private FrameLayout savesLayout;
+    private String saveSlot;
+    private boolean saveHold;
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +62,97 @@ public class GameActivity extends AppCompatActivity {
         yesDutyButton = findViewById(R.id.yesDutyButton);
         noExitButton = findViewById(R.id.noExitButton);
         settingsButton = findViewById(R.id.settingsButton);
-        mapButton = findViewById(R.id.mapButton);helpButton = findViewById(R.id.helpButton);
+        mapButton = findViewById(R.id.mapButton);
+        helpButton = findViewById(R.id.helpButton);
+        saveButton1 = findViewById(R.id.saveButton1);
+        saveButton2 = findViewById(R.id.saveButton2);
+        saveButton3 = findViewById(R.id.saveButton3);
+        saveExitButton = findViewById(R.id.saveExitButton);
+
         settingsLayout = findViewById(R.id.settingsLayout);
+        savesLayout = findViewById(R.id.savesLayout);
         display = findViewById(R.id.dialogTextView);
         gameActivity = GameActivity.this;
+        saveHold = true;
 
         //hide the two other buttons
         mapButton.setVisibility(View.GONE);
         helpButton.setVisibility(View.GONE);
-        res = new ResourceKeeper(display);
-        q = new Questions(res, this);
+
+        String saveSlot = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            saveSlot = extras.getString("saveSlot");
+            if(saveSlot.equals("no")){
+                res = new ResourceKeeper(display);
+                q = new Questions(res, this);
+            }
+            else{
+                SaveDataParser sdp = new SaveDataParser(
+                        this, null, null, saveSlot);
+                JSONObject saveJSON = sdp.getJSON();
+                try {
+                    int index = saveJSON.getInt("index");
+                    int time = saveJSON.getInt("time");
+                    int order = saveJSON.getInt("order");
+                    int food = saveJSON.getInt("food");
+                    int gold = saveJSON.getInt("gold");
+                    int might = saveJSON.getInt("might");
+                    int seed = saveJSON.getInt("seed");
+                    int religionFlag = saveJSON.getInt("religionFlag");
+                    int magicFlag = saveJSON.getInt("magicFlag");
+                    int plagueFlag = saveJSON.getInt("plagueFlag");
+
+
+
+                    res = new ResourceKeeper
+                            (time, order, food, gold, might,seed, display);
+                    q = new Questions(
+                            res, index, intToBool(religionFlag),
+                            intToBool(plagueFlag), intToBool(magicFlag), this);
+                } catch (JSONException e) {
+                    Log.e(TAG, String.valueOf(e));
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        TextView save1TextView = findViewById(R.id.save1TextView);
+        TextView save2TextView = findViewById(R.id.save2TextView);
+        TextView save3TextView = findViewById(R.id.save3TextView);
+
+        SaveDataParser sdp1 = new SaveDataParser(this, null, null, "save1");
+        SaveDataParser sdp2 = new SaveDataParser(this, null, null, "save2");
+        SaveDataParser sdp3 = new SaveDataParser(this, null, null, "save3");
+
+        String date1;
+        if(sdp1.getValidity()) {
+            date1 = sdp1.getDate();
+        }
+        else {
+            date1 = "EMPTY";
+        }
+        String date2;
+        if(sdp2.getValidity()) {
+            date2 = sdp2.getDate();
+        }
+        else {
+            date2 = "EMPTY";
+        }
+        String date3;
+        if(sdp3.getValidity()) {
+            date3 = sdp3.getDate();
+        }
+        else {
+            date3 = "EMPTY";
+        }
+
+        save1TextView.setText(date1);
+        save2TextView.setText(date2);
+        save3TextView.setText(date3);
+
+
+
 
         buttonListenerSetup();
         gameActivity.runOnUiThread(() -> {
@@ -88,10 +186,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void callMenu() {
-        MenuAsker menu = new MenuAsker(menuText, q, res, yesDutyButton, mapButton, helpButton, noExitButton, true, display);
-        menu.run();
-        if(mapButton.getVisibility() == View.GONE) {
-            toggleButtonLayout();
+        if(!inFailState()){
+            MenuAsker menu = new MenuAsker(menuText, q, res, yesDutyButton, mapButton, helpButton, noExitButton, true, display);
+            menu.run();
+            if (mapButton.getVisibility() == View.GONE) {
+                toggleButtonLayout();
+            }
+        }
+        else {
+            //do win/lose content
+
+            callExit();
         }
     }
 
@@ -176,8 +281,13 @@ public class GameActivity extends AppCompatActivity {
     private void callExit() {
         //currently exits to main but like weird
         //need to add save prompt
-        gameActivity.finish();
-        System.exit(0);
+        if(!inFailState()) {
+            callSaveDialog();
+        }
+        else {
+            gameActivity.finish();
+            System.exit(0);
+        }
     }
 
     private boolean callAcknowledgement() {
@@ -243,6 +353,10 @@ public class GameActivity extends AppCompatActivity {
         setMapButton();
         setHelpButton();
         setNoExitButton();
+        setSaveButton1();
+        setSaveButton2();
+        setSaveButton3();
+        setSaveExitButton();
     }
 
     private void setYesDutyButton() {
@@ -395,7 +509,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    public void setSettingsButton() {
+    private void setSettingsButton() {
         settingsButton.setOnClickListener(v -> {
             //open settings page
             if(settingsLayout.getVisibility() == View.VISIBLE) {
@@ -422,5 +536,111 @@ public class GameActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void setSaveButton1() {
+        saveButton1.setOnClickListener(v -> {
+            saveSlot = "save1";
+            saveHold = false;
+        });
+    }
+
+    private void setSaveButton2() {
+        saveButton2.setOnClickListener(v -> {
+            saveSlot = "save2";
+            saveHold = false;
+        });
+    }
+
+    private void setSaveButton3() {
+        saveButton3.setOnClickListener(v -> {
+            saveSlot = "save3";
+            saveHold = false;
+        });
+    }
+
+    private void setSaveExitButton() {
+        saveExitButton.setOnClickListener(v -> {
+            saveSlot = "no";
+            saveHold = false;
+        });
+    }
+
+    private boolean inFailState() {
+        if(res.getOrder() <= 0 ||
+                res.getFood() <= 0 ||
+                res.getGold() <= 0 ||
+                res.getMight() <= 0 ||
+                res.getOrder() >= 30 ||
+                res.getFood() >= 30 ||
+                res.getGold() >= 30 ||
+                res.getMight() >= 30 ||
+                res.getTime() == 45) {
+            return true;
+
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void callSaveDialog() {
+        toggleSaveView();
+        new Thread() {
+            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+            public void run() {
+                while(saveHold) {
+                    try {
+                        currentThread().sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                if(!saveSlot.equals("no")){
+                    SaveDataParser saver = new SaveDataParser(gameActivity, res, q, saveSlot);
+                    saver.saveGame();
+                }
+                gameActivity.finish();
+                System.exit(0);
+            }
+        }.start();
+
+    }
+
+    void toggleSaveView() {
+        if(savesLayout.getVisibility() == View.VISIBLE) {
+            savesLayout.setVisibility(View.INVISIBLE);
+            saveButton1.setEnabled(false);
+            saveButton2.setEnabled(false);
+            saveButton3.setEnabled(false);
+            saveExitButton.setEnabled(false);
+
+            yesDutyButton.setEnabled(true);
+            mapButton.setEnabled(true);
+            helpButton.setEnabled(true);
+            noExitButton.setEnabled(true);
+
+        }
+        else {
+            savesLayout.setVisibility(View.VISIBLE);
+            saveButton1.setEnabled(true);
+            saveButton2.setEnabled(true);
+            saveButton3.setEnabled(true);
+            saveExitButton.setEnabled(true);
+
+            yesDutyButton.setEnabled(false);
+            mapButton.setEnabled(false);
+            helpButton.setEnabled(false);
+            noExitButton.setEnabled(false);
+
+        }
+    }
+
+    private boolean intToBool(int x) {
+        if(x == 0) {
+            return false;
+        }
+        return true;
     }
 }

@@ -273,7 +273,7 @@
                     app:srcCompat="@drawable/save_button_2" />
 
                 <TextView
-                    android:id="@+id/save1TextView2"
+                    android:id="@+id/save2TextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -302,7 +302,7 @@
                     app:srcCompat="@drawable/save_button_3" />
 
                 <TextView
-                    android:id="@+id/save1TextView3"
+                    android:id="@+id/save3TextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
