@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,12 +19,39 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class GameActivity extends AppCompatActivity {
     GameActivity gameActivity;
     private static final String TAG = "GameActivity";
     private final String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
     private final String lossText = "Ahhh Jeeez you lost? Big RIPs dude, wanna try again? ";
     private TextView display;
+    private int[] NPCs = {
+            R.drawable.elder_1,
+
+            R.drawable.aristocrat_01,
+
+            R.drawable.aristocrat_02,
+
+            R.drawable.barkeep,
+
+            R.drawable.captain,
+
+            R.drawable.farmer,
+
+            R.drawable.guard,
+
+            R.drawable.masked_man,
+
+            R.drawable.merchant,
+
+            R.drawable.stranger,
+
+            R.drawable.trader_1,
+
+            R.drawable.villager_01
+    };
     private ImageButton yesDutyButton;
     private ImageButton noExitButton;
     private ImageButton mapButton;
@@ -42,6 +70,7 @@ public class GameActivity extends AppCompatActivity {
     private FrameLayout savesLayout;
     private String saveSlot;
     private boolean saveHold;
+    private static GifImageView npcWindow;
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +97,7 @@ public class GameActivity extends AppCompatActivity {
         saveButton2 = findViewById(R.id.saveButton2);
         saveButton3 = findViewById(R.id.saveButton3);
         saveExitButton = findViewById(R.id.saveExitButton);
+        npcWindow = findViewById(R.id.npcWindow);
 
         settingsLayout = findViewById(R.id.settingsLayout);
         savesLayout = findViewById(R.id.savesLayout);
@@ -186,12 +216,26 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void callMenu() {
+        setNPCView(R.drawable.elder_1);
         if(!inFailState()){
             MenuAsker menu = new MenuAsker(menuText, q, res, yesDutyButton, mapButton, helpButton, noExitButton, true, display);
             menu.run();
             if (mapButton.getVisibility() == View.GONE) {
                 toggleButtonLayout();
             }
+            new Thread() {
+                public void run() {
+                    try {
+                        currentThread().sleep(100);
+                        if (mapButton.getVisibility() == View.GONE) {
+                            toggleButtonLayout();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }.start();
         }
         else {
             //do win/lose content
@@ -642,5 +686,10 @@ public class GameActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    //usage setNPCView(R.drawable.resource);
+    public static void setNPCView(int gif) {
+        npcWindow.setImageResource(gif);
     }
 }
