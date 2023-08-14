@@ -121,10 +121,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="center"
-                android:scaleX="4.5"
-                android:scaleY="4.5"
+                android:scaleX="4"
+                android:scaleY="4"
                 android:src="@drawable/elder_1"
-                android:translationY="-15dp" />
+                android:translationY="-5dp" />
 
 
             <LinearLayout
@@ -253,7 +253,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -282,7 +283,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -311,7 +313,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <ImageButton

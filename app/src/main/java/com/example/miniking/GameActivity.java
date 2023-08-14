@@ -25,7 +25,8 @@ public class GameActivity extends AppCompatActivity {
     GameActivity gameActivity;
     private static final String TAG = "GameActivity";
     private final String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
-    private final String lossText = "Ahhh Jeeez you lost? Big RIPs dude, wanna try again? ";
+    private final String lossText = "Ahhh Jeeez you lost? Big RIPs dude, press any button to go to the main menu.";
+    private final String winText = "Congratulations, a wise monarch you ended up being eh? Perhaps another kingdom can be led to prosperity, press any button to go to the main menu.";
     private TextView display;
     private int[] NPCs = {
             R.drawable.elder_1,
@@ -328,24 +329,55 @@ public class GameActivity extends AppCompatActivity {
         if(!inFailState()) {
             callSaveDialog();
         }
+        else if(!inWinState()){
+            gameActivity.runOnUiThread(() -> {
+                Asker asker = new Asker(lossText, res, true, display);
+                asker.draw();
+            });
+            new Thread() {
+                public void run() {
+                    if(mapButton.getVisibility() == View.VISIBLE){
+                        toggleButtonLayout();
+                    }
+                    acknowledged = false;
+                    while(!acknowledged) {
+                        try {
+                            currentThread().sleep(200);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    closeSession();
+                }
+            }.start();
+        }
         else {
-            gameActivity.finish();
-            System.exit(0);
+            gameActivity.runOnUiThread(() -> {
+                Asker asker = new Asker(winText, res, true, display);
+                asker.draw();
+            });
+            new Thread() {
+                public void run() {
+                    if(mapButton.getVisibility() == View.VISIBLE){
+                        toggleButtonLayout();
+                    }
+                    acknowledged = false;
+                    while(!acknowledged) {
+                        try {
+                            currentThread().sleep(200);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    closeSession();
+                }
+            }.start();
         }
     }
 
-    private boolean callAcknowledgement() {
-        //changes the buttons to just acknowledge the prompt
-        //changes the layout to 2 button
-        //returns true or false
-
-        if(mapButton.getVisibility() == View.VISIBLE){
-            toggleButtonLayout();
-        }
-
-        waitForAcknowledgment();
-
-        return response;
+    private void closeSession() {
+        gameActivity.finish();
+        System.exit(0);
     }
 
     private void waitForAcknowledgment() {
@@ -620,6 +652,24 @@ public class GameActivity extends AppCompatActivity {
                 res.getGold() >= 30 ||
                 res.getMight() >= 30 ||
                 res.getTime() == 45) {
+            return true;
+
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean inWinState() {
+        if(res.getOrder() > 0 &&
+                res.getFood() > 0 &&
+                res.getGold() > 0 &&
+                res.getMight() > 0 &&
+                res.getOrder() < 30 &&
+                res.getFood() < 30 &&
+                res.getGold() < 30 &&
+                res.getMight() < 30 &&
+                res.getTime() >= 45) {
             return true;
 
         }

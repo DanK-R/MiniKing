@@ -298,7 +298,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -327,7 +328,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -356,7 +358,8 @@
                     android:maxLines="2"
                     android:minLines="1"
                     android:padding="5dp"
-                    android:text="Empty" />
+                    android:text="Empty"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <ImageButton
