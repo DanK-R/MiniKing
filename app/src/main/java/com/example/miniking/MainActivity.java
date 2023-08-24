@@ -210,24 +210,21 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open settings page
-                if(settingsLayout.getVisibility() == View.VISIBLE) {
-                    settingsLayout.setVisibility(View.INVISIBLE);
-                    newGameButton.setEnabled(true);
-                    continueButton.setEnabled(true);
-                    linkButton.setEnabled(true);
-                    exitButton.setEnabled(true);
-                }
-                else {
-                    settingsLayout.setVisibility(View.VISIBLE);
-                    newGameButton.setEnabled(false);
-                    continueButton.setEnabled(false);
-                    linkButton.setEnabled(false);
-                    exitButton.setEnabled(false);
-                }
+        settingsButton.setOnClickListener(v -> {
+            //open settings page
+            if(settingsLayout.getVisibility() == View.VISIBLE) {
+                settingsLayout.setVisibility(View.INVISIBLE);
+                newGameButton.setEnabled(true);
+                continueButton.setEnabled(true);
+                linkButton.setEnabled(true);
+                exitButton.setEnabled(true);
+            }
+            else {
+                settingsLayout.setVisibility(View.VISIBLE);
+                newGameButton.setEnabled(false);
+                continueButton.setEnabled(false);
+                linkButton.setEnabled(false);
+                exitButton.setEnabled(false);
             }
         });
 
@@ -283,13 +280,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        saveExitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleSaveView();
-
-            }
-        });
+        saveExitButton.setOnClickListener(v -> toggleSaveView());
     }
 
     void toggleSaveView() {

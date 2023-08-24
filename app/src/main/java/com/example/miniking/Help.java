@@ -3,20 +3,8 @@ package com.example.miniking;
 import android.widget.TextView;
 
 class Help {
-    private static ResourceKeeper res;
-    private static TextView display;
-    public Help(TextView display) {
-        this.display = display;
-        helpView();
-    }
-    
-    public static void helpView() {
-        if(res != null) {
-            DrawScene.open(display);
-            res.draw();
-            DrawScene.close(display);
-        }
-        
+    public static void helpView(TextView display) {
+
         DrawScene.open(display);
         Printer.printyBox(
             "The premise is simple, your job as Monarch is to balance the resources of your Kingdom. If any of the resources (Order, Food, Gold, Might) drop to empty, or fill up all the way, you lose. This represents the Kingdoms balance."

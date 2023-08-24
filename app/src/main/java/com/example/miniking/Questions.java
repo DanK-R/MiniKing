@@ -2,23 +2,25 @@ package com.example.miniking;//Object that handles the list of situations.
 
 import android.content.Context;
 
-import java.util.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
 
 class Questions {
     private int index;
     private ArrayList<String[]> qList;
-    private ResourceKeeper res;
-    private Random rand;
+    private final ResourceKeeper res;
+    private final Random rand;
     private boolean religionFlag;
     private boolean plagueFlag;
     private boolean magicFlag;
-    private Context context;
+    private final Context context;
 
     //used on new game
     public Questions(ResourceKeeper res, Context context) {
         this.index = 0;
-        this.qList = new ArrayList<String[]>();
+        this.qList = new ArrayList<>();
         this.res = res;
         this.religionFlag = false;
         this.plagueFlag = false;
@@ -41,7 +43,7 @@ class Questions {
     //used when loading a save or choosing a specific seed
     public Questions(ResourceKeeper res, int index, boolean religionFlag, boolean plagueFlag, boolean magicFlag,Context context) {
         this.index = index;
-        this.qList = new ArrayList<String[]>();
+        this.qList = new ArrayList<>();
         this.res = res;
         this.context = context;
         this.religionFlag = religionFlag;
@@ -52,12 +54,10 @@ class Questions {
         //parse the data from MainList into questions
         //File file = new File(String.valueOf(R.raw.main_list));
         Scanner scnr = new Scanner(context.getResources().openRawResource(R.raw.main_list));
-        int i = 0;
         while (scnr.hasNextLine()) {
             String data = scnr.nextLine();
             String[] dataParsed = data.split("@",5);
             qList.add(dataParsed);
-            i++;
         }
         scnr.close();
         Collections.shuffle(qList, rand);
@@ -78,8 +78,7 @@ class Questions {
         else {
             indexTemp = index;
         }
-        String out = qList.get(indexTemp)[0];
-        return out;
+        return qList.get(indexTemp)[0];
     }
 
     //process either outcome and return the resulting text, increment index, and calls listUpdater if needed
@@ -114,12 +113,12 @@ class Questions {
     //interprets the keywords laced within the Tomes
     private void applyOutcome(String out) {
         String[] outDataParsed = out.split("#");
-        for(int k = 0; k < outDataParsed.length; k++) {
-            switch(outDataParsed[k]) {
+        for (String s : outDataParsed) {
+            switch (s) {
                 case "O+":
                     res.setOrder(1);
                     break;
-                
+
                 case "O-":
                     res.setOrder(-1);
                     break;
@@ -127,7 +126,7 @@ class Questions {
                 case "F+":
                     res.setFood(1);
                     break;
-                
+
                 case "F-":
                     res.setFood(-1);
                     break;
@@ -135,7 +134,7 @@ class Questions {
                 case "G+":
                     res.setGold(1);
                     break;
-                
+
                 case "G-":
                     res.setGold(-1);
                     break;
@@ -143,7 +142,7 @@ class Questions {
                 case "M+":
                     res.setMight(1);
                     break;
-                
+
                 case "M-":
                     res.setMight(-1);
                     break;
@@ -151,7 +150,7 @@ class Questions {
                 case "O++":
                     res.setOrder(2);
                     break;
-                
+
                 case "O--":
                     res.setOrder(-2);
                     break;
@@ -159,7 +158,7 @@ class Questions {
                 case "F++":
                     res.setFood(2);
                     break;
-                
+
                 case "F--":
                     res.setFood(-2);
                     break;
@@ -167,7 +166,7 @@ class Questions {
                 case "G++":
                     res.setGold(2);
                     break;
-                
+
                 case "G--":
                     res.setGold(-2);
                     break;
@@ -175,7 +174,7 @@ class Questions {
                 case "M++":
                     res.setMight(2);
                     break;
-                
+
                 case "M--":
                     res.setMight(-2);
                     break;
@@ -183,7 +182,7 @@ class Questions {
                 case "O+++":
                     res.setOrder(3);
                     break;
-                
+
                 case "O---":
                     res.setOrder(-3);
                     break;
@@ -191,7 +190,7 @@ class Questions {
                 case "F+++":
                     res.setFood(3);
                     break;
-                
+
                 case "F---":
                     res.setFood(-3);
                     break;
@@ -199,7 +198,7 @@ class Questions {
                 case "G+++":
                     res.setGold(3);
                     break;
-                
+
                 case "G---":
                     res.setGold(-3);
                     break;
@@ -207,7 +206,7 @@ class Questions {
                 case "M+++":
                     res.setMight(3);
                     break;
-                
+
                 case "M---":
                     res.setMight(-3);
                     break;
@@ -219,11 +218,11 @@ class Questions {
                 case "p":
                     this.plagueFlag = true;
                     break;
-                
+
                 case "m":
                     this.magicFlag = true;
                     break;
-                
+
                 default:
                     break;
             }
@@ -254,13 +253,13 @@ class Questions {
     
     private void listUpdater() {
         //add answered ultimatums to the outList
-        ArrayList<String[]> outList = new ArrayList<String[]>();
+        ArrayList<String[]> outList = new ArrayList<>();
         for(int i = 0; i < index; i++) {
             outList.add(qList.get(i));
         }
 
         //add future ultimatums to tempList
-        ArrayList<String[]> tempList = new ArrayList<String[]>();
+        ArrayList<String[]> tempList = new ArrayList<>();
         for(int i = index; i < qList.size(); i++) {
             tempList.add(qList.get(i));
         }
@@ -280,9 +279,7 @@ class Questions {
         Collections.shuffle(tempList, r);
 
         //add shuffled list to the outlist
-        for(int i = 0; i < tempList.size(); i++) {
-            outList.add(tempList.get(i));
-        }
+        outList.addAll(tempList);
         //replace old qList with outList
         this.qList = outList;
     } 

@@ -12,11 +12,11 @@ class ResourceKeeper {
     private int gold;
     private int might;
     private int seed;
-    private Random rand;
-    private String rivalName;
-    private String magicianName;
-    private String religionName;
-    private TextView display;
+    private final Random rand;
+    private final String rivalName;
+    private final String magicianName;
+    private final String religionName;
+    private final TextView display;
 
     public ResourceKeeper(TextView display) {
         this.time = 1;
@@ -31,13 +31,13 @@ class ResourceKeeper {
         Random r = new Random();
         boolean running = true;
         for(int j = 0; running; j++) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
             for(int i = 0; i < 9; i++) {
                 sb.append(r.nextInt(7) + 1);
             }
 
-            File file = new File("Temp/" + sb.toString() + ".txt");
+            File file = new File("Temp/" + sb + ".txt");
             if (!file.exists()) {
                 this.seed = Integer.parseInt(sb.toString());
                 running = false;
@@ -83,7 +83,7 @@ class ResourceKeeper {
 
     //bar meter ascii
     private String meter(int value) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < 30; i++) {
             if(i < value) {

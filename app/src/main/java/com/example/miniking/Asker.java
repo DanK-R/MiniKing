@@ -1,16 +1,13 @@
-package com.example.miniking;//Displays the passed string, then returns true if input is affermative
-import android.view.View;
-import android.widget.ImageButton;
+package com.example.miniking;//Displays the passed string, then returns true if input is affirmative
+
 import android.widget.TextView;
 
-import java.util.*;
-
 class Asker{
-    private String question;
+    private final String question;
     private ResourceKeeper res;
-    private boolean clear;
+    private final boolean clear;
 
-    private TextView display;
+    private final TextView display;
 
     public Asker(String q, ResourceKeeper res, boolean clear, TextView display) {
         this.question = q;

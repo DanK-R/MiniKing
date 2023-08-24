@@ -3,7 +3,7 @@ package com.example.miniking;
 import android.widget.TextView;
 
 class Map {
-    private static String[] map = {
+    private static final String[] map = {
         "####################################################",
         "#                #                #                #",
         "#                #                #                #",
@@ -34,7 +34,7 @@ class Map {
         "#####################################################\n"
     };
 
-    private static String[] rival = {
+    private static final String[] rival = {
         "#     &&  &&     #",
         "#       &&       #",
         "#      &&&&      #",
@@ -81,7 +81,7 @@ class Map {
         }
         
         for(int i = 0; i < rival.length; i++) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(mapT[startPointY + i]);
             sb.replace(startPointX, startPointX + 18,rival[i]);
             mapT[startPointY + i] = sb.toString();

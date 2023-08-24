@@ -1,14 +1,11 @@
 package com.example.miniking;
 
-import android.app.Activity;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
 class Printer {
-    private static int[] NPCs = {
+    private static final int[] NPCs = {
             R.drawable.elder_1,
 
             R.drawable.aristocrat_01,
@@ -36,7 +33,7 @@ class Printer {
 
     public static void printyBox(String output, TextView display) {
         String[] outStrings = output.split(" ");
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int width = 53;
 
         sb.append("#  ");
@@ -51,12 +48,12 @@ class Printer {
                     }
                 }
 
-                display.append(sb.toString() + "\n");
-                sb = new StringBuffer();
+                display.append(sb + "\n");
+                sb = new StringBuilder();
                 sb.append("#  ");
             }
             else {
-                sb.append(outStrings[i] + " ");
+                sb.append(outStrings[i]).append(" ");
 
                 if (i == outStrings.length - 1) {
                     int start = sb.length();
@@ -68,7 +65,7 @@ class Printer {
                         }
                     }
                     display.append(sb.toString());
-                    sb = new StringBuffer();
+                    sb = new StringBuilder();
                 }
                 i++;
             }
@@ -78,7 +75,7 @@ class Printer {
 
     public static void printyBoxReplacer(String output, ResourceKeeper res, TextView display) {
         String[] outStrings = output.split(" ");
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int width = 53;
 
         sb.append("#  ");
@@ -118,11 +115,11 @@ class Printer {
                     }
 
 
-                    display.append(sb.toString() + "\n");
-                    sb = new StringBuffer();
+                    display.append(sb + "\n");
+                    sb = new StringBuilder();
                     sb.append("#  ");
                 } else {
-                    sb.append(outStrings[i] + " ");
+                    sb.append(outStrings[i]).append(" ");
 
                     if (i == outStrings.length - 1) {
                         int start = sb.length();
@@ -135,7 +132,7 @@ class Printer {
                         }
 
                         display.append(sb.toString());
-                        sb = new StringBuffer();
+                        sb = new StringBuilder();
                     }
                     i++;
                 }
@@ -153,7 +150,7 @@ class Printer {
     //width is the amount of chars between the #s
     //prints string in the middle of the game display
     public static String Middle(String output, int width) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("#");
         int buffer = (width - output.length()) / 2;
         for(int i = 0; i < buffer; i++) {

@@ -1,22 +1,18 @@
 package com.example.miniking;//Main menu of the game
-import android.content.Context;
-import android.media.Image;
-import android.view.View;
-import android.widget.ImageButton;
+
 import android.widget.TextView;
 
 class MenuAsker {
-    private TextView display;
-    private String question;
-    private ResourceKeeper res;
-    private boolean clear;
-    private Questions qList;
-    public MenuAsker(String q, Questions qList, ResourceKeeper res, ImageButton dutyButton, ImageButton mapButton, ImageButton helpButton, ImageButton exitButton,
+    private final TextView display;
+    private final String question;
+    private final ResourceKeeper res;
+    private final boolean clear;
+
+    public MenuAsker(String q, ResourceKeeper res,
                      boolean clear, TextView display) {
         this.question = q;
         this.res = res;
         this.clear = clear;
-        this.qList = qList;
         this.display = display;
     }
 

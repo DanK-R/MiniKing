@@ -2,45 +2,36 @@ package com.example.miniking;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 public class SaveDataParser {
     private static final String TAG = "SaveDataParser";
-    private Context context;
-    private boolean validity;
-    private ResourceKeeper res;
-    private Questions q;
-    private FileWriter fileWriter;
-    private FileReader fileReader;
-    private File save;
+    private final boolean validity;
+    private final ResourceKeeper res;
+    private final Questions q;
+    private final File save;
 
     public SaveDataParser(Context context, ResourceKeeper res, Questions q, String saveSlot) {
         //read and write to a pre-existing save
-        this.context = context;
         this.res = res;
         this.q = q;
         File directory = new File(context.getFilesDir(), "saves");
@@ -48,14 +39,9 @@ public class SaveDataParser {
             directory.mkdir();
         }
         save = new File(directory, saveSlot + ".json");
-        if(save.exists()) {
-            validity = true;
-        }
-        else {
-            validity = false;
-        }
+        validity = save.exists();
 
-        Log.e(TAG, "Validity:" + validity + save.toString());
+        Log.e(TAG, "Validity:" + validity + save);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -63,7 +49,7 @@ public class SaveDataParser {
         //save date to json file
 
         try {
-            fileWriter = new FileWriter(save);
+            FileWriter fileWriter = new FileWriter(save);
             JSONObject saveJSON = new JSONObject();
             saveJSON.put("index", q.getIndex());
             saveJSON.put("time", res.getTime());
@@ -85,10 +71,7 @@ public class SaveDataParser {
 
             fileWriter.write(saveJSON.toString());
             fileWriter.flush();
-        } catch (IOException e) {
-            Log.e(TAG, String.valueOf(e));
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             Log.e(TAG, String.valueOf(e));
             throw new RuntimeException(e);
         }
@@ -101,7 +84,7 @@ public class SaveDataParser {
         JSONObject saveJSON = null;
         if(validity){
             try {
-                fileReader = new FileReader(save);
+                FileReader fileReader = new FileReader(save);
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -110,12 +93,6 @@ public class SaveDataParser {
                 }
                 if(stringBuilder.length() > 0)
                     saveJSON = (JSONObject) new JSONTokener(stringBuilder.toString()).nextValue();
-            } catch (FileNotFoundException e) {
-                Log.e(TAG, String.valueOf(e));
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                Log.e(TAG, String.valueOf(e));
-                throw new RuntimeException(e);
             } catch (Exception e) {
                 Log.e(TAG, String.valueOf(e));
                 throw new RuntimeException(e);

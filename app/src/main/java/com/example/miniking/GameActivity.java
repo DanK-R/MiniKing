@@ -4,16 +4,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageSwitcher;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -24,35 +20,9 @@ import pl.droidsonroids.gif.GifImageView;
 public class GameActivity extends AppCompatActivity {
     GameActivity gameActivity;
     private static final String TAG = "GameActivity";
-    private final String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
     private final String lossText = "Ahhh Jeeez you lost? Big RIPs dude, press any button to go to the main menu.";
     private final String winText = "Congratulations, a wise monarch you ended up being eh? Perhaps another kingdom can be led to prosperity, press any button to go to the main menu.";
     private TextView display;
-    private int[] NPCs = {
-            R.drawable.elder_1,
-
-            R.drawable.aristocrat_01,
-
-            R.drawable.aristocrat_02,
-
-            R.drawable.barkeep,
-
-            R.drawable.captain,
-
-            R.drawable.farmer,
-
-            R.drawable.guard,
-
-            R.drawable.masked_man,
-
-            R.drawable.merchant,
-
-            R.drawable.stranger,
-
-            R.drawable.trader_1,
-
-            R.drawable.villager_01
-    };
     private ImageButton yesDutyButton;
     private ImageButton noExitButton;
     private ImageButton mapButton;
@@ -110,7 +80,7 @@ public class GameActivity extends AppCompatActivity {
         mapButton.setVisibility(View.GONE);
         helpButton.setVisibility(View.GONE);
 
-        String saveSlot = null;
+        String saveSlot;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             saveSlot = extras.getString("saveSlot");
@@ -186,9 +156,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         buttonListenerSetup();
-        gameActivity.runOnUiThread(() -> {
-            display.setText("");
-        });
+        gameActivity.runOnUiThread(() -> display.setText(""));
 
 
 
@@ -196,7 +164,7 @@ public class GameActivity extends AppCompatActivity {
 
         new Thread() {
             public void run() {
-                Help h = new Help(display);
+                Help.helpView(display);
                 Asker a1 = new Asker("Press a Button to Continue.", false, display);
                 a1.draw();
 
@@ -206,7 +174,7 @@ public class GameActivity extends AppCompatActivity {
                 acknowledged = false;
                 while(!acknowledged) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -219,7 +187,8 @@ public class GameActivity extends AppCompatActivity {
     private void callMenu() {
         setNPCView(R.drawable.elder_1);
         if(!inFailState()){
-            MenuAsker menu = new MenuAsker(menuText, q, res, yesDutyButton, mapButton, helpButton, noExitButton, true, display);
+            String menuText = "Good afternoon your Highness, to what course of action does this day have the pleasure?";
+            MenuAsker menu = new MenuAsker(menuText, res, true, display);
             menu.run();
             if (mapButton.getVisibility() == View.GONE) {
                 toggleButtonLayout();
@@ -227,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
             new Thread() {
                 public void run() {
                     try {
-                        currentThread().sleep(100);
+                        sleep(100);
                         if (mapButton.getVisibility() == View.GONE) {
                             toggleButtonLayout();
                         }
@@ -256,7 +225,7 @@ public class GameActivity extends AppCompatActivity {
                 acknowledged = false;
                 while(!acknowledged) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -266,7 +235,7 @@ public class GameActivity extends AppCompatActivity {
                 acknowledged = false;
                 while(!acknowledged) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -288,7 +257,7 @@ public class GameActivity extends AppCompatActivity {
                 acknowledged = false;
                 while(!acknowledged) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -299,10 +268,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void callHelp() {
-        gameActivity.runOnUiThread(() -> {
-            display.setText("");
-        });
-        Help help = new Help(display);
+        gameActivity.runOnUiThread(() -> display.setText(""));
+        Help.helpView(display);
         Asker asker = new Asker("",false, display);
         asker.acknowledge();
         new Thread() {
@@ -313,7 +280,7 @@ public class GameActivity extends AppCompatActivity {
                 acknowledged = false;
                 while(!acknowledged) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -342,7 +309,7 @@ public class GameActivity extends AppCompatActivity {
                     acknowledged = false;
                     while(!acknowledged) {
                         try {
-                            currentThread().sleep(200);
+                            sleep(200);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -364,7 +331,7 @@ public class GameActivity extends AppCompatActivity {
                     acknowledged = false;
                     while(!acknowledged) {
                         try {
-                            currentThread().sleep(200);
+                            sleep(200);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -378,21 +345,6 @@ public class GameActivity extends AppCompatActivity {
     private void closeSession() {
         gameActivity.finish();
         System.exit(0);
-    }
-
-    private void waitForAcknowledgment() {
-        acknowledged = false;
-        new Thread() {
-            public void run() {
-                while(!acknowledged) {
-                    try {
-                        currentThread().sleep(200);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }.start();
     }
 
     private void toggleButtonLayout() {
@@ -483,9 +435,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setMapButton() {
-        gameActivity.runOnUiThread(() -> {
-            mapButton.setImageResource(R.drawable.map_button_unpressed_5by3);
-        });
+        gameActivity.runOnUiThread(() -> mapButton.setImageResource(R.drawable.map_button_unpressed_5by3));
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -512,9 +462,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setHelpButton() {
-        gameActivity.runOnUiThread(() -> {
-            helpButton.setImageResource(R.drawable.help_button_unpressed_5by3);
-        });
+        gameActivity.runOnUiThread(() -> helpButton.setImageResource(R.drawable.help_button_unpressed_5by3));
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -643,7 +591,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean inFailState() {
-        if(res.getOrder() <= 0 ||
+        return res.getOrder() <= 0 ||
                 res.getFood() <= 0 ||
                 res.getGold() <= 0 ||
                 res.getMight() <= 0 ||
@@ -651,17 +599,11 @@ public class GameActivity extends AppCompatActivity {
                 res.getFood() >= 30 ||
                 res.getGold() >= 30 ||
                 res.getMight() >= 30 ||
-                res.getTime() == 45) {
-            return true;
-
-        }
-        else {
-            return false;
-        }
+                res.getTime() == 45;
     }
 
     private boolean inWinState() {
-        if(res.getOrder() > 0 &&
+        return res.getOrder() > 0 &&
                 res.getFood() > 0 &&
                 res.getGold() > 0 &&
                 res.getMight() > 0 &&
@@ -669,13 +611,7 @@ public class GameActivity extends AppCompatActivity {
                 res.getFood() < 30 &&
                 res.getGold() < 30 &&
                 res.getMight() < 30 &&
-                res.getTime() >= 45) {
-            return true;
-
-        }
-        else {
-            return false;
-        }
+                res.getTime() >= 45;
     }
 
     private void callSaveDialog() {
@@ -685,7 +621,7 @@ public class GameActivity extends AppCompatActivity {
             public void run() {
                 while(saveHold) {
                     try {
-                        currentThread().sleep(200);
+                        sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -732,10 +668,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean intToBool(int x) {
-        if(x == 0) {
-            return false;
-        }
-        return true;
+        return x != 0;
     }
 
     //usage setNPCView(R.drawable.resource);
