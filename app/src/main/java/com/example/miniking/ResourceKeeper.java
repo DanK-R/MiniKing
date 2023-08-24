@@ -18,55 +18,6 @@ class ResourceKeeper {
     private String religionName;
     private TextView display;
 
-    //used on new game
-    public ResourceKeeper() {
-        this.time = 1;
-        this.order = 15;
-        this.food = 15;
-        this.gold = 15;
-        this.might = 15;
-
-        //create unique random seed - 9 ints each 1-8, 134,217,728 possible outcomes
-        //100 tries at a new seed else it terminates
-        Random r = new Random();
-        boolean running = true;
-        for(int j = 0; running; j++) {
-            StringBuffer sb = new StringBuffer();
-            
-            for(int i = 0; i < 9; i++) {
-                sb.append(r.nextInt(7) + 1);
-            }
-            
-            File file = new File("Temp/" + sb.toString() + ".txt");
-            if (!file.exists()) {
-                this.seed = Integer.parseInt(sb.toString());
-                running = false;
-            }
-            if(j == 100) {
-                System.out.println("Unique Seed Generation Failure");
-                System.exit(0);
-            }
-        }  
-
-        //seeded random rival name
-        this.rand = new Random(seed);
-        this.rivalName = (NameGen.rivalName(rand));
-    }
-
-    //used when loading games or choosing custom seed
-    public ResourceKeeper(int time, int order, int food, int gold, int might, int seed) {
-        this.time = time;
-        this.order = order;
-        this.food = food;
-        this.gold = gold;
-        this.might = might;
-        this.seed = seed;
-        this.rand = new Random(seed);
-        this.rivalName = (NameGen.rivalName(rand));
-        this.religionName = (NameGen.religionName(rand));
-        this.magicianName = (NameGen.magicianName(rand));
-    }
-
     public ResourceKeeper(TextView display) {
         this.time = 1;
         this.order = 15;

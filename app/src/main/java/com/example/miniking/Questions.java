@@ -107,11 +107,6 @@ class Questions {
         return t;
     }
 
-    
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
     public int getIndex() {
         return this.index;
     }
@@ -230,21 +225,9 @@ class Questions {
                     break;
                 
                 default:
-                    Printer.printyBox("Uh Oh, applyOutcomes applied no outcomes");
                     break;
             }
         }
-    }
-    
-    public void setReligionFlag(boolean religionFlag) {
-        this.religionFlag = religionFlag;
-        
-    }
-    public void setPlagueFlag(boolean plagueFlag) {
-        this.plagueFlag = plagueFlag;
-    }
-    public void setMagicFlag(boolean magicFlag) {
-        this.magicFlag = magicFlag;
     }
 
 
@@ -284,7 +267,6 @@ class Questions {
         
         //add the religion questions to templist if religionFlag is raised
         if(religionFlag) {
-            //File file = new File(String.valueOf(R.raw.religion_list));
             Scanner scnr = new Scanner(context.getResources().openRawResource(R.raw.religion_list));
             while (scnr.hasNextLine()) {
                 String data = scnr.nextLine();
@@ -303,27 +285,5 @@ class Questions {
         }
         //replace old qList with outList
         this.qList = outList;
-
-        /*
-        //debugger view
-        //print qList
-        String pop = "index" + index + "qList: ";
-        for(int i = 0; i < qList.size(); i++) {
-            pop = pop + ", " + qList.get(i)[0].charAt(0);
-        }
-        EnterAsker ea = new EnterAsker(pop,false);
-        //print tempList
-        String pop2 = "index" + index + "tempList: ";
-        for(int i = 0; i < tempList.size(); i++) {
-            pop2 = pop2 + ", " + tempList.get(i)[0].charAt(0) + tempList.get(i)[0].charAt(1);
-        }
-        EnterAsker ea2 = new EnterAsker(pop2,false);
-        //print outList
-        String pop3 = "index" + index + "outList: ";
-        for(int i = 0; i < outList.size(); i++) {
-            pop3 = pop3 + ", " + outList.get(i)[0].charAt(0) + outList.get(i)[0].charAt(1);
-        }
-        EnterAsker ea3 = new EnterAsker(pop3,false);
-        */
     } 
 }

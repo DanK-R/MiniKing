@@ -5,25 +5,12 @@ import android.widget.TextView;
 class Help {
     private static ResourceKeeper res;
     private static TextView display;
-    public Help(ResourceKeeper res) {
-        this.res = res;
-        helpView();
-    }
-    public Help() {
-        helpView();
-    }
-    public Help(ResourceKeeper res, TextView display) {
-        this.res = res;
-        this.display = display;
-        helpView();
-    }
     public Help(TextView display) {
         this.display = display;
         helpView();
     }
     
     public static void helpView() {
-        //DrawScene.clear();
         if(res != null) {
             DrawScene.open(display);
             res.draw();
@@ -31,10 +18,6 @@ class Help {
         }
         
         DrawScene.open(display);
-//        if(res == null) {
-//            Printer.printyBox("Hello and welcome to the game!", display);
-//        }
-//        Printer.printyBox("", display);
         Printer.printyBox(
             "The premise is simple, your job as Monarch is to balance the resources of your Kingdom. If any of the resources (Order, Food, Gold, Might) drop to empty, or fill up all the way, you lose. This represents the Kingdoms balance."
         , display);
@@ -52,6 +35,5 @@ class Help {
                 , display);
         
         DrawScene.open(display);
-        //EnterAsker eAsker = new EnterAsker(false);
     }
 }

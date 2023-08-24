@@ -220,8 +220,6 @@ public class MainActivity extends AppCompatActivity{
                     continueButton.setEnabled(true);
                     linkButton.setEnabled(true);
                     exitButton.setEnabled(true);
-//                    leftButtonsLayout.setVisibility(View.VISIBLE);
-//                    rightButtonsLayout.setVisibility(View.VISIBLE);
                 }
                 else {
                     settingsLayout.setVisibility(View.VISIBLE);
@@ -229,8 +227,6 @@ public class MainActivity extends AppCompatActivity{
                     continueButton.setEnabled(false);
                     linkButton.setEnabled(false);
                     exitButton.setEnabled(false);
-//                    leftButtonsLayout.setVisibility(View.INVISIBLE);
-//                    rightButtonsLayout.setVisibility(View.INVISIBLE);
                 }
             }
         });

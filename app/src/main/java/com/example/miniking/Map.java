@@ -50,7 +50,6 @@ class Map {
     //765
     
     public static void mapView(ResourceKeeper res, TextView display) {
-        //DrawScene.clear();
         
         String[] mapT = map;
         int rivalDat = res.getSeedIndex(0);
@@ -95,9 +94,7 @@ class Map {
                 display.append("\n");
             }
             display.append(mapT[i]);
-            //System.out.println(mapT[i]);
         }
-        //EnterAsker eAsker = new EnterAsker(false);
     }
 
     //11

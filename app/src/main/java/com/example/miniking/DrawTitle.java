@@ -30,14 +30,6 @@ class DrawTitle {
             "#                                    #  #    ##     #",
             "#                                    #  #   ## ##   #",
             "#                                    #  #### #   #  #"};
-
-    public static void go() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-        }
-    }
     public static void go(TextView display) {
         //System.out.print("\033[H\033[2J");
         //System.out.flush();
